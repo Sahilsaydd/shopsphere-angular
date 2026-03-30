@@ -1,0 +1,116 @@
+.navbar {
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.navbar {
+  border-bottom: 1px solid #eee;
+}
+
+.navbar-brand {
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  color: #333;
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  color: #0d6efd;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #0d6efd;
+}
+
+.search-box {
+  background: #f1f3f5;
+  border-radius: 50px;
+  min-width: 280px; /* prevent wrapping */
+}
+
+.search-box input {
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  width: 100%;
+  white-space: nowrap; /* prevent text wrapping */
+}
+
+.search-box input::placeholder {
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.search-box i {
+  color: #888;
+}
+
+i {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+i:hover {
+  color: #0d6efd;
+}
+
+a{
+    text-decoration: none;
+    color: #333;
+}
+
+
+
+/* custom-link*/
+.custom-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* underline hidden initially */
+.custom-link::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #0d6efd;
+  transition: width 0.3s ease;
+}
+
+/* hover effect */
+.custom-link:hover::after {
+  width: 100%;
+}
+
+/* active route underline */
+.custom-link.active::after {
+  width: 100%;
+}
+
+/* active color */
+.custom-link.active {
+  color: #0d6efd !important;
+}
+
+
+/*Icon */
+
+.icon-group a {
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+/* hover effect */
+.icon-group a:hover {
+  color: #0d6efd;
+  transform: scale(1.2);
+}
+
+/* active route */
+.icon-group a.active-icon {
+  color: #0d6efd;
+}
