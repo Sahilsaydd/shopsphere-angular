@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
 
 export const routes: Routes = [
-    {path:"",loadComponent: ()=> import('./features/home/home').then((m)=>m.Home)},
+    {path:"",loadComponent: ()=> import('./features/home/home').then((m)=>m.Home) ,  runGuardsAndResolvers: 'always' },
     {
         path:"shop",
         loadComponent:()=> import('./features/shop/shop').then((m)=>m.Shop)

@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CategoriesComponent } from '../categories/categories';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  
+  standalone: true,
+  imports: [RouterLink, CategoriesComponent],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrls: ['./home.css']
 })
 export class Home {}

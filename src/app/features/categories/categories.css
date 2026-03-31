@@ -1,0 +1,48 @@
+.category-card {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+  transform: scale(1.02);
+}
+
+/* Sizes */
+.category-card.large {
+  height: 320px;
+}
+
+.category-card.medium {
+  height: 150px;
+}
+
+.category-card.small {
+  height: 150px;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  color: white;
+  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+}
+
+.overlay h4,
+.overlay h5,
+.overlay h6 {
+  margin: 0;
+}
+
+.overlay p {
+  margin: 5px 0 10px;
+  font-size: 14px;
+}
