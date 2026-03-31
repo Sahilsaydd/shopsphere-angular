@@ -1,2 +1,138 @@
-<p>shop works!</p>
-<h1>This is the shop container</h1>
+<div class="container-fluid my-5">
+  <h2 class="fw-bold mb-4">Curated Collections</h2>
+
+  <div class="row">
+    <!-- ================= LEFT SIDEBAR ================= -->
+    <div class="col-md-3">
+      <h6 class="fw-bold mb-3">CATEGORIES</h6>
+
+      <div class="list-group mb-4">
+        <button
+          *ngFor="let cat of categories"
+          class="list-group-item list-group-item-action"
+          [class.active]="selectedCategory === cat"
+          (click)="filterByCategory(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
+
+      <!-- PRICE RANGE -->
+      <h6 class="fw-bold mt-4">PRICE RANGE</h6>
+
+      <input
+        type="range"
+        class="form-range"
+        [min]="minPrice"
+        [max]="maxPrice"
+        [(ngModel)]="selectedPrice"
+        (input)="filterByPrice()"
+      />
+
+      <div class="d-flex justify-content-between">
+        <small>₹ 0</small>
+        <small class="fw-bold">₹ {{ selectedPrice }}</small>
+      </div>
+    </div>
+
+    <!-- ================= RIGHT PRODUCTS ================= -->
+    <div class="col-md-9">
+      <div class="row g-4" *ngIf="paginatedProduct.length > 0">
+
+        <div class="col-md-4" *ngFor="let product of paginatedProduct">
+          <div class="product-card p-2">
+
+            <!-- IMAGE -->
+            <div class="img-wrapper position-relative">
+              <img
+                [src]="product.image"
+                loading="lazy"
+                class="img-fluid rounded"
+              />
+
+              <span
+                *ngIf="product.badge"
+                class="badge bg-warning text-dark position-absolute top-0 start-0 m-2"
+              >
+                {{ product.badge }}
+              </span>
+            </div>
+
+            <!-- CATEGORY (PRO UPGRADE) -->
+            <span
+              class="category-badge"
+              [ngClass]="{
+                'electronics': product.category === 'Electronics',
+                'fashion': product.category === 'Fashion',
+                'footwear': product.category === 'Footwear',
+                'home': product.category.includes('Home'),
+                'fitness': product.category === 'Fitness',
+                'beauty': product.category.includes('Beauty'),
+                'sports': product.category === 'Sports',
+                'books': product.category === 'Books',
+                'outdoor': product.category === 'Outdoor'
+              }"
+            >
+              {{ product.category }}
+            </span>
+
+            <!-- PRODUCT NAME -->
+            <h6 class="fw-bold mt-1">{{ product.name }}</h6>
+
+            <!-- RATING -->
+            <div class="d-flex align-items-center mt-1">
+              <span class="text-warning me-2">
+                <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
+                <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
+              </span>
+              <small class="text-muted">{{ product.rating }}</small>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <small class="text-muted d-block">
+              {{ product.desc }}
+            </small>
+
+            <!-- PRICE + ACTIONS -->
+            <div class="d-flex justify-content-between mt-2 align-items-center">
+              <span class="text-primary fw-bold">₹ {{ product.price }}</span>
+
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-danger btn-sm" (click)="goToWishlist()">
+                  <i class="fa fa-heart"></i>
+                </button>
+
+                <button class="btn btn-primary btn-sm">
+                  <i class="fa fa-shopping-cart"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PAGINATION -->
+      <div class="d-flex justify-content-center mt-4">
+        <button
+          class="btn btn-outline-primary me-2"
+          (click)="prevPage()"
+          [disabled]="currentpage === 1"
+        >
+          Prev
+        </button>
+
+        <span class="px-3">Page {{ currentpage }}</span>
+
+        <button
+          class="btn btn-outline-primary ms-2"
+          (click)="nextPage()"
+          [disabled]="currentpage * itemperpage >= filteredProducts.length"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

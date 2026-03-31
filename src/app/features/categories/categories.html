@@ -11,61 +11,50 @@
     </a>
   </div>
 
-  <div *ngIf="categories.length >= 4; else loading" class="row g-4">
-
-    <!-- LEFT BIG CARD -->
-    <div class="col-lg-6" *ngIf="categories[0]">
-      <div 
-        class="category-card large"
-        [style.background-image]="'url(' + categories[0].image + ')'"
-      >
-        <div class="overlay">
-          <h4>{{ categories[0].name }}</h4>
-          <p>{{ categories[0].desc }}</p>
-        </div>
-      </div>
+  <div *ngIf="categories.length > 0; else loading">
+    <div class="mb-4">
+      <span class="badge bg-light text-dark me-2" *ngFor="let category of categories">
+        {{ category.name }}
+      </span>
     </div>
 
-    <!-- RIGHT SIDE -->
-    <div class="col-lg-6">
-      <div class="row g-4">
+    <div class="row g-4">
+      <ng-container *ngFor="let category of categories; index as i">
+        <div *ngIf="i === 0" class="col-lg-6">
+          <div
+            class="category-card large"
+            [ngStyle]="{ 'background-image': 'url(' + category.image + ')' }"
+          >
+            <div class="overlay">
+              <h4>{{ category.name }}</h4>
+              <p>{{ category.desc }}</p>
+            </div>
+          </div>
+        </div>
 
-        <div class="col-12">
-          <div 
+        <div *ngIf="i === 1" class="col-12">
+          <div
             class="category-card medium"
-            [style.background-image]="'url(' + categories[1].image + ')'"
+            [ngStyle]="{ 'background-image': 'url(' + category.image + ')' }"
           >
             <div class="overlay">
-              <h5>{{ categories[1].name }}</h5>
+              <h5>{{ category.name }}</h5>
             </div>
           </div>
         </div>
 
-        <div class="col-6">
-          <div 
+        <div *ngIf="i === 2 || i === 3" class="col-6">
+          <div
             class="category-card small"
-            [style.background-image]="'url(' + categories[2].image + ')'"
+            [ngStyle]="{ 'background-image': 'url(' + category.image + ')' }"
           >
             <div class="overlay">
-              <h6>{{ categories[2].name }}</h6>
+              <h6>{{ category.name }}</h6>
             </div>
           </div>
         </div>
-
-        <div class="col-6">
-          <div 
-            class="category-card small"
-            [style.background-image]="'url(' + categories[3].image + ')'"
-          >
-            <div class="overlay">
-              <h6>{{ categories[3].name }}</h6>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      </ng-container>
     </div>
-
   </div>
 
   <ng-template #loading>

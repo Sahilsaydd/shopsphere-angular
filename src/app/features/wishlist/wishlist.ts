@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-wishlist',
+  standalone: true,
   imports: [],
   templateUrl: './wishlist.html',
-  styleUrl: './wishlist.css',
+  styleUrls: ['./wishlist.css'],
 })
 export class Wishlist {}

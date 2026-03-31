@@ -5,9 +5,10 @@ import { Footer } from './shared/components/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet ,Navbar,Footer],
+  standalone: true,
+  imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App {
 }

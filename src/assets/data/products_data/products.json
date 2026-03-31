@@ -1,0 +1,162 @@
+[
+  {"id":1,"name":"Studio Wireless Headphones","category":"Electronics","price":349,"rating":4.9,"image":"https://images.unsplash.com/photo-1518441902110-4e1d7c8b0f8c?w=400","badge":"NEW","desc":"High-fidelity wireless sound."},
+  {"id":2,"name":"Smart Fitness Watch","category":"Electronics","price":199,"rating":4.7,"image":"https://images.unsplash.com/photo-1512499617640-c2f999098c01?w=400","desc":"Track your fitness smartly."},
+  {"id":3,"name":"Gaming Mouse","category":"Electronics","price":120,"rating":4.6,"image":"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400","desc":"Precision gaming mouse."},
+  {"id":4,"name":"Bluetooth Speaker","category":"Electronics","price":180,"rating":4.5,"image":"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400","desc":"Portable powerful sound."},
+  {"id":5,"name":"4K Smart TV","category":"Electronics","price":3200,"rating":4.8,"image":"https://images.unsplash.com/photo-1593784991095-a205069470b6?w=400","desc":"Ultra HD Smart TV."},
+  {"id":6,"name":"Gaming Laptop","category":"Electronics","price":5200,"rating":4.9,"image":"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400","desc":"High performance laptop."},
+  {"id":7,"name":"Wireless Charger","category":"Electronics","price":60,"rating":4.5,"image":"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400","desc":"Fast charging pad."},
+  {"id":8,"name":"VR Headset","category":"Electronics","price":1500,"rating":4.8,"image":"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400","desc":"Virtual reality experience."},
+  {"id":9,"name":"Smart Bulb","category":"Electronics","price":45,"rating":4.4,"image":"https://images.unsplash.com/photo-1516117172878-fd2c41f4a759?w=400","desc":"Smart lighting."},
+  {"id":10,"name":"Tablet Device","category":"Electronics","price":450,"rating":4.7,"image":"https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400","desc":"Portable computing."},
+
+  {"id":11,"name":"Casual T-Shirt","category":"Fashion","price":80,"rating":4.4,"image":"https://images.unsplash.com/photo-1520975661595-6453be3f7070?w=400","desc":"Comfort cotton wear."},
+  {"id":12,"name":"Denim Jeans","category":"Fashion","price":150,"rating":4.6,"image":"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400","desc":"Slim fit jeans."},
+  {"id":13,"name":"Hoodie","category":"Fashion","price":180,"rating":4.7,"image":"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400","desc":"Warm hoodie."},
+  {"id":14,"name":"Formal Shirt","category":"Fashion","price":120,"rating":4.5,"image":"https://images.unsplash.com/photo-1520975916090-3105956dac38?w=400","desc":"Office wear."},
+  {"id":15,"name":"Summer Dress","category":"Fashion","price":220,"rating":4.7,"image":"https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400","desc":"Elegant summer dress."},
+
+  {"id":16,"name":"Running Shoes","category":"Footwear","price":220,"rating":4.7,"image":"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400","desc":"Lightweight running shoes."},
+  {"id":17,"name":"Sneakers","category":"Footwear","price":180,"rating":4.6,"image":"https://images.unsplash.com/photo-1528701800489-20be3c3ea9a7?w=400","desc":"Street style sneakers."},
+  {"id":18,"name":"Formal Shoes","category":"Footwear","price":300,"rating":4.8,"image":"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=400","desc":"Elegant leather shoes."},
+  {"id":19,"name":"Sandals","category":"Footwear","price":90,"rating":4.3,"image":"https://images.unsplash.com/photo-1582735689369-4fe89db7114c?w=400","desc":"Comfort sandals."},
+
+  {"id":20,"name":"Office Chair","category":"Home & Furniture","price":700,"rating":4.6,"image":"https://images.unsplash.com/photo-1503602642458-232111445657?w=400","desc":"Ergonomic chair."},
+  {"id":21,"name":"Sofa Set","category":"Home & Furniture","price":2500,"rating":4.7,"image":"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400","desc":"Luxury sofa."},
+  {"id":22,"name":"Dining Table","category":"Home & Furniture","price":1800,"rating":4.6,"image":"https://images.unsplash.com/photo-1493666438817-866a91353ca9?w=400","desc":"Wood dining table."},
+  {"id":23,"name":"Bed Frame","category":"Home & Furniture","price":2000,"rating":4.7,"image":"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400","desc":"Modern bed."},
+
+  {"id":24,"name":"Yoga Mat","category":"Fitness","price":70,"rating":4.5,"image":"https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=400","desc":"Anti-slip mat."},
+  {"id":25,"name":"Dumbbells","category":"Fitness","price":200,"rating":4.6,"image":"https://images.unsplash.com/photo-1571019613914-85f342c1d4b5?w=400","desc":"Strength training."},
+  {"id":26,"name":"Treadmill","category":"Fitness","price":1200,"rating":4.8,"image":"https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=400","desc":"Indoor cardio."},
+
+  {"id":27,"name":"Face Cream","category":"Beauty & Personal Care","price":90,"rating":4.4,"image":"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400","desc":"Daily skincare."},
+  {"id":28,"name":"Perfume","category":"Beauty & Personal Care","price":400,"rating":4.7,"image":"https://images.unsplash.com/photo-1541643600914-78b084683601?w=400","desc":"Luxury fragrance."},
+  {"id":29,"name":"Hair Dryer","category":"Beauty & Personal Care","price":140,"rating":4.5,"image":"https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400","desc":"Quick drying."},
+
+  {"id":30,"name":"Cricket Bat","category":"Sports","price":250,"rating":4.6,"image":"https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400","desc":"Professional bat."},
+  {"id":31,"name":"Football","category":"Sports","price":120,"rating":4.4,"image":"https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400","desc":"Match ball."},
+
+  {"id":32,"name":"Coffee Maker","category":"Home & Kitchen","price":350,"rating":4.6,"image":"https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400","desc":"Fresh brew."},
+  {"id":33,"name":"Blender","category":"Home & Kitchen","price":180,"rating":4.5,"image":"https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=400","desc":"Smooth blending."},
+
+  {"id":34,"name":"Camping Tent","category":"Outdoor","price":800,"rating":4.7,"image":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400","desc":"Adventure ready."},
+  {"id":35,"name":"Travel Backpack","category":"Outdoor","price":250,"rating":4.6,"image":"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400","desc":"Travel smart."},
+
+  {"id":36,"name":"Motivational Book","category":"Books","price":40,"rating":4.8,"image":"https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400","desc":"Self growth."},
+
+  {"id":37,"name":"Desk Lamp","category":"Home","price":95,"rating":4.5,"image":"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400","desc":"Modern lighting."},
+
+  {"id":38,"name":"Wall Art","category":"Home","price":75,"rating":4.4,"image":"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=400","desc":"Creative decor."},
+
+  {"id":39,"name":"Water Bottle","category":"Fitness","price":25,"rating":4.3,"image":"https://images.unsplash.com/photo-1526403223374-3a9f02b2c4a3?w=400","desc":"Stay hydrated."},
+
+  {"id":40,"name":"Gaming Chair","category":"Electronics","price":1200,"rating":4.8,"image":"https://images.unsplash.com/photo-1616628182500-9c1f6a0f7a91?w=400","desc":"Comfort gaming."},
+
+  {"id":41,"name":"Keyboard","category":"Electronics","price":160,"rating":4.7,"image":"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400","desc":"Mechanical keyboard."},
+
+  {"id":42,"name":"USB Hub","category":"Electronics","price":45,"rating":4.3,"image":"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400","desc":"Expand ports."},
+
+  {"id":43,"name":"Desk Organizer","category":"Home","price":40,"rating":4.2,"image":"https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=400","desc":"Organize desk."},
+
+  {"id":44,"name":"Bedside Lamp","category":"Home","price":70,"rating":4.5,"image":"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=400","desc":"Soft lighting."},
+
+  {"id":45,"name":"Electric Kettle","category":"Home & Kitchen","price":60,"rating":4.5,"image":"https://images.unsplash.com/photo-1510626176961-4b37d9f0b68a?w=400","desc":"Quick boiling."},
+
+  {"id":46,"name":"Cookware Set","category":"Home & Kitchen","price":400,"rating":4.7,"image":"https://images.unsplash.com/photo-1506368083636-6defb67639a7?w=400","desc":"Kitchen essentials."},
+
+  {"id":47,"name":"Perfume Premium","category":"Beauty & Personal Care","price":500,"rating":4.8,"image":"https://images.unsplash.com/photo-1541643600914-78b084683601?w=400","desc":"Luxury scent."},
+
+  {"id":48,"name":"Electric Toothbrush","category":"Beauty & Personal Care","price":90,"rating":4.5,"image":"https://images.unsplash.com/photo-1588776814546-ec7c3c66bdf1?w=400","desc":"Oral care."},
+
+  {"id":49,"name":"Camping Stove","category":"Outdoor","price":220,"rating":4.6,"image":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400","desc":"Outdoor cooking."},
+
+  {"id":50,"name":"Sleeping Bag","category":"Outdoor","price":300,"rating":4.7,"image":"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400","desc":"Warm sleeping."},
+
+  {"id":51,"name":"Smartphone Pro","category":"Electronics","price":999,"rating":4.9,"image":"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400","desc":"Latest smartphone."},
+  {"id":52,"name":"Camera DSLR","category":"Electronics","price":850,"rating":4.8,"image":"https://images.unsplash.com/photo-1519183071298-a2962e402c8d?w=400","desc":"Pro photography."},
+  {"id":53,"name":"Action Camera","category":"Electronics","price":600,"rating":4.7,"image":"https://images.unsplash.com/photo-1508898578281-774ac4893a78?w=400","desc":"Adventure camera."},
+  {"id":54,"name":"Laptop Stand","category":"Electronics","price":90,"rating":4.5,"image":"https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400","desc":"Ergonomic stand."},
+  {"id":55,"name":"Monitor 27 inch","category":"Electronics","price":700,"rating":4.7,"image":"https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400","desc":"HD display."},
+
+  {"id":56,"name":"Winter Jacket","category":"Fashion","price":300,"rating":4.7,"image":"https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400","desc":"Warm jacket."},
+  {"id":57,"name":"Leather Belt","category":"Fashion","price":70,"rating":4.4,"image":"https://images.unsplash.com/photo-1593032465171-8a3b66c1d8b4?w=400","desc":"Premium belt."},
+  {"id":58,"name":"Sunglasses","category":"Fashion","price":110,"rating":4.3,"image":"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400","desc":"UV protection."},
+  {"id":59,"name":"Cap","category":"Fashion","price":40,"rating":4.2,"image":"https://images.unsplash.com/photo-1514996937319-344454492b37?w=400","desc":"Casual cap."},
+  {"id":60,"name":"Handbag","category":"Fashion","price":250,"rating":4.6,"image":"https://images.unsplash.com/photo-1585386959984-a415522316f3?w=400","desc":"Stylish handbag."},
+
+  {"id":61,"name":"Dining Chair","category":"Home & Furniture","price":300,"rating":4.5,"image":"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=400","desc":"Comfort seating."},
+  {"id":62,"name":"Wardrobe","category":"Home & Furniture","price":2000,"rating":4.7,"image":"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400","desc":"Storage space."},
+  {"id":63,"name":"Bookshelf","category":"Home & Furniture","price":900,"rating":4.6,"image":"https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=400","desc":"Wooden shelf."},
+  {"id":64,"name":"TV Unit","category":"Home & Furniture","price":1200,"rating":4.6,"image":"https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400","desc":"Modern TV unit."},
+
+  {"id":65,"name":"Skipping Rope","category":"Fitness","price":30,"rating":4.3,"image":"https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=400","desc":"Cardio training."},
+  {"id":66,"name":"Resistance Bands","category":"Fitness","price":60,"rating":4.4,"image":"https://images.unsplash.com/photo-1571019613914-85f342c1d4b5?w=400","desc":"Workout bands."},
+
+  {"id":67,"name":"Face Wash","category":"Beauty & Personal Care","price":50,"rating":4.4,"image":"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=400","desc":"Clean skin."},
+  {"id":68,"name":"Shampoo","category":"Beauty & Personal Care","price":70,"rating":4.5,"image":"https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400","desc":"Hair care."},
+
+  {"id":69,"name":"Badminton Racket","category":"Sports","price":150,"rating":4.5,"image":"https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400","desc":"Sports racket."},
+
+  {"id":70,"name":"Notebook","category":"Books","price":20,"rating":4.3,"image":"https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400","desc":"Daily notes."},
+
+  {"id":71,"name":"Pressure Cooker","category":"Home & Kitchen","price":120,"rating":4.6,"image":"https://images.unsplash.com/photo-1506368083636-6defb67639a7?w=400","desc":"Kitchen essential."},
+
+  {"id":72,"name":"Gas Stove","category":"Home & Kitchen","price":300,"rating":4.7,"image":"https://images.unsplash.com/photo-1506368083636-6defb67639a7?w=400","desc":"Cooking stove."},
+
+  {"id":73,"name":"Tent Light","category":"Outdoor","price":50,"rating":4.4,"image":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400","desc":"Camping light."},
+
+  {"id":74,"name":"Travel Bottle","category":"Outdoor","price":40,"rating":4.3,"image":"https://images.unsplash.com/photo-1526403223374-3a9f02b2c4a3?w=400","desc":"Outdoor bottle."},
+
+  {"id":75,"name":"Tablet Pro","category":"Electronics","price":800,"rating":4.8,"image":"https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400","desc":"Premium tablet."},
+
+  {"id":76,"name":"Smart Ring","category":"Electronics","price":300,"rating":4.6,"image":"https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400","desc":"Smart wearable."},
+
+  {"id":77,"name":"Gaming Console","category":"Electronics","price":1500,"rating":4.9,"image":"https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400","desc":"Next-gen console."},
+
+  {"id":78,"name":"Router WiFi","category":"Electronics","price":120,"rating":4.5,"image":"https://images.unsplash.com/photo-1581090700227-4c4f50a9c2d6?w=400","desc":"Fast internet."},
+
+  {"id":79,"name":"Power Bank","category":"Electronics","price":80,"rating":4.6,"image":"https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400","desc":"Portable charging."},
+
+  {"id":80,"name":"Mini Fridge","category":"Electronics","price":900,"rating":4.7,"image":"https://images.unsplash.com/photo-1586201375761-83865001e17b?w=400","desc":"Compact fridge."},
+
+  {"id":81,"name":"Electric Iron","category":"Home & Kitchen","price":60,"rating":4.5,"image":"https://images.unsplash.com/photo-1586201375761-83865001e17b?w=400","desc":"Clothes ironing."},
+
+  {"id":82,"name":"Vacuum Cleaner","category":"Home & Kitchen","price":400,"rating":4.7,"image":"https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=400","desc":"Clean home."},
+
+  {"id":83,"name":"Air Purifier","category":"Home & Kitchen","price":700,"rating":4.8,"image":"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400","desc":"Clean air."},
+
+  {"id":84,"name":"Mixer Grinder","category":"Home & Kitchen","price":200,"rating":4.6,"image":"https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=400","desc":"Kitchen tool."},
+
+  {"id":85,"name":"Juicer","category":"Home & Kitchen","price":150,"rating":4.5,"image":"https://images.unsplash.com/photo-1574180045827-681f8a1a9622?w=400","desc":"Fresh juice."},
+
+  {"id":86,"name":"Table Fan","category":"Home","price":90,"rating":4.4,"image":"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400","desc":"Cooling fan."},
+
+  {"id":87,"name":"Ceiling Fan","category":"Home","price":200,"rating":4.5,"image":"https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400","desc":"Powerful fan."},
+
+  {"id":88,"name":"Curtains","category":"Home","price":120,"rating":4.4,"image":"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400","desc":"Home decor."},
+
+  {"id":89,"name":"Carpet","category":"Home","price":300,"rating":4.6,"image":"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400","desc":"Soft carpet."},
+
+  {"id":90,"name":"Wall Clock","category":"Home","price":50,"rating":4.3,"image":"https://images.unsplash.com/photo-1493666438817-866a91353ca9?w=400","desc":"Modern clock."},
+
+  {"id":91,"name":"Smart Door Lock","category":"Electronics","price":600,"rating":4.7,"image":"https://images.unsplash.com/photo-1581090700227-4c4f50a9c2d6?w=400","desc":"Secure lock."},
+
+  {"id":92,"name":"Security Camera","category":"Electronics","price":300,"rating":4.6,"image":"https://images.unsplash.com/photo-1581090700227-4c4f50a9c2d6?w=400","desc":"Home security."},
+
+  {"id":93,"name":"Drone Camera","category":"Electronics","price":1200,"rating":4.8,"image":"https://images.unsplash.com/photo-1508898578281-774ac4893a78?w=400","desc":"Aerial shots."},
+
+  {"id":94,"name":"Projector","category":"Electronics","price":900,"rating":4.7,"image":"https://images.unsplash.com/photo-1581090700227-4c4f50a9c2d6?w=400","desc":"Big screen."},
+
+  {"id":95,"name":"Electric Scooter","category":"Outdoor","price":2000,"rating":4.8,"image":"https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400","desc":"Eco ride."},
+
+  {"id":96,"name":"Mountain Bike","category":"Outdoor","price":1500,"rating":4.7,"image":"https://images.unsplash.com/photo-1518655048521-f130df041f66?w=400","desc":"Trail bike."},
+
+  {"id":97,"name":"Camping Chair","category":"Outdoor","price":120,"rating":4.5,"image":"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400","desc":"Outdoor chair."},
+
+  {"id":98,"name":"Travel Pillow","category":"Outdoor","price":40,"rating":4.3,"image":"https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=400","desc":"Comfort travel."},
+
+  {"id":99,"name":"Luxury Watch","category":"Fashion","price":1200,"rating":4.9,"image":"https://images.unsplash.com/photo-1512499617640-c2f999098c01?w=400","desc":"Premium watch."},
+
+  {"id":100,"name":"Designer Shoes","category":"Footwear","price":900,"rating":4.8,"image":"https://images.unsplash.com/photo-1528701800489-20be3c3ea9a7?w=400","desc":"Luxury footwear."}
+]

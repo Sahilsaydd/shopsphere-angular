@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CategoriesComponent } from './categories';
+import { CategoryService } from '../../core/services/categories';
 
 describe('Categories', () => {
   let component: CategoriesComponent;
@@ -8,7 +11,15 @@ describe('Categories', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoriesComponent],
+      imports: [CategoriesComponent, RouterTestingModule],
+      providers: [
+        {
+          provide: CategoryService,
+          useValue: {
+            getCategories: () => of([]),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CategoriesComponent);
