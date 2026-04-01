@@ -14,7 +14,7 @@ export interface categories{
 })
 export class CategoryService {
 
- private url = '/assets/data/categories_data/categories.json';
+ private url = 'assets/data/categories_data/categories.json';
   constructor(private http:HttpClient){}
 
   getCategories(): Observable<categories[]>{

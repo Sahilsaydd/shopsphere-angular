@@ -1,3 +1,4 @@
+/* ================= HERO SECTION ================= */
 .hero-section {
   height: 90vh;
   background: linear-gradient(
@@ -5,15 +6,22 @@
       rgba(65, 63, 63, 0.6),
       rgba(146, 146, 146, 0.2)
     ),
-   url('/assets/images/home/HomeImg.jpg')no-repeat center center/cover;
-   
+    url('/assets/images/home/HomeImg.jpg') no-repeat center center/cover;
 }
-/* Text spacing */
+
 .hero-section h1 {
   line-height: 1.2;
 }
 
-/* Button styling */
+@media (max-width: 768px) {
+  .hero-section {
+    text-align: center;
+    height: auto;
+    padding: 80px 0;
+  }
+}
+
+/* ================= BUTTONS ================= */
 .btn-primary {
   background-color: #2f6fed;
   border: none;
@@ -28,25 +36,15 @@
   border-radius: 10px;
 }
 
-@media (max-width: 768px) {
-  .hero-section {
-    text-align: center;
-    height: auto;
-    padding: 80px 0;
-  }
+/* ================= LINKS ================= */
+a {
+  text-decoration: none;
+  color: #ffffff;
 }
 
-a{
-    text-decoration: none;
-    color: #FFFFFF;
-}
-
-
-
-
-/* other componet desing*/
+/* ================= SECOND SECTION ================= */
 .anther_section {
-  background-color: #9abaff91; /* light grey bg */
+  background-color: #9abaff91;
 }
 
 h1 {
@@ -54,55 +52,74 @@ h1 {
   line-height: 1.2;
 }
 
-
-
 img {
   max-height: 420px;
   object-fit: cover;
 }
 
+/* ===== TRENDING SECTION FIX ===== */
+
+/* Remove horizontal scroll completely */
+.scroll-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  overflow: hidden;
+}
+
+/* Card styling */
 .product-card {
   background: #ffffff;
-  border-radius: 24px;
-  padding: 1.25rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
+/* Image wrapper */
 .card-img-wrapper {
+  border-radius: 16px;
   overflow: hidden;
-  border-radius: 18px;
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
 }
 
 .card-img-wrapper img {
   width: 100%;
-  display: block;
+  height: 220px;
+  object-fit: cover;
 }
 
-@media (max-width: 576px) {
-  .row.g-4 > .col-6 {
-    flex: 0 0 50%;
-    max-width: 50%;
+/* Badge */
+.product-card .badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+/* Nav buttons (optional UI only) */
+.nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .scroll-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-
-
-
-/* Home Last Section */
-
-.email-input {
-  max-width: 320px;
-  height: 45px;
-  border-radius: 8px;
-}
-
-button {
-  height: 45px;
-  border-radius: 8px;
+@media (max-width: 576px) {
+  .scroll-container {
+    grid-template-columns: 1fr;
+  }
 }
