@@ -9,7 +9,7 @@ export const routes: Routes = [
     },
     {
         path:"cart",
-        loadComponent:()=> import('./features/cart/cart').then((m)=>m.Cart)
+        loadComponent:()=> import('./features/cart/cart').then((m)=>m.CartComponent)
     },
   
     {
