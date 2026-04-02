@@ -1,1 +1,10 @@
-<p>login works!</p>
+<div class="container mt-5">
+  <h3>Login</h3>
+
+  <input [(ngModel)]="email" placeholder="Email" class="form-control mb-2" autocomplete="off" />
+  <input [(ngModel)]="password" type="password" placeholder="Password" class="form-control mb-2" />
+
+  <button (click)="onLogin()" class="btn btn-primary" autocomplete="new-password">Login</button>
+
+  <p class="text-danger mt-2">{{ error }}</p>
+</div>

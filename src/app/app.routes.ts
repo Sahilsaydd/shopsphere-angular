@@ -1,15 +1,16 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
     {path:"",loadComponent: ()=> import('./features/home/home').then((m)=>m.Home) ,  runGuardsAndResolvers: 'always' },
     {
         path:"shop",
-        loadComponent:()=> import('./features/shop/shop').then((m)=>m.Shop)
+        loadComponent:()=> import('./features/shop/shop').then((m)=>m.Shop ),canActivate:[authGuard]
     },
     {
         path:"cart",
-        loadComponent:()=> import('./features/cart/cart').then((m)=>m.CartComponent)
+        loadComponent:()=> import('./features/cart/cart').then((m)=>m.CartComponent),canActivate:[authGuard]
     },
   
     {
@@ -18,6 +19,10 @@ export const routes: Routes = [
     },
     {
         path:"wishlist",
-        loadComponent: ()=>import('./features/wishlist/wishlist').then((m)=>m.Wishlist)
+        loadComponent: ()=>import('./features/wishlist/wishlist').then((m)=>m.Wishlist),canActivate:[authGuard]
+    },
+    {
+        path:"login",
+        loadComponent: ()=>import('./features/login/login').then((m)=>m.Login)
     }
 ];
