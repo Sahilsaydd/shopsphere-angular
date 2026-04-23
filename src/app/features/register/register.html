@@ -1,0 +1,143 @@
+<div class="auth-container d-flex justify-content-center align-items-center">
+
+  <div class="auth-card shadow-lg">
+    <div class="text-center mb-3">
+      <img src="/assets/images/ecommerce-logo.png.jpg" alt="E-Commerce" class="site-logo" />
+    </div>
+
+    <!-- LEFT SIDE -->
+    <div class="auth-left text-white">
+      <h3 class="fw-bold">Create Account</h3>
+      <p class="mt-2">Join us and explore amazing products</p>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="auth-right">
+
+      <h4 class="fw-bold mb-3">Register</h4>
+
+      <!-- FORM START -->
+      <form #form="ngForm" (ngSubmit)="onRegister()" autocomplete="off">
+
+        <!-- Hidden dummy fields to capture browser autofill -->
+        <input type="text" autocomplete="username" class="hidden-autofill" aria-hidden="true">
+        <input type="password" autocomplete="new-password" class="hidden-autofill" aria-hidden="true">
+
+        <!-- NAME -->
+        <div class="input-group mb-1">
+          <span class="input-group-text">
+            <i class="fa fa-user"></i>
+          </span>
+          <input
+            name="name"
+            [(ngModel)]="name"
+            #nameRef="ngModel"
+            required
+            minlength="3"
+            type="text"
+            class="form-control"
+            placeholder="Full Name"
+            autocomplete="name"
+          />
+        </div>
+        <small class="text-danger" *ngIf="nameRef.touched && nameRef.invalid">
+          <span *ngIf="nameRef.errors?.['required']">Name is required</span>
+          <span *ngIf="nameRef.errors?.['minlength']">Minimum 3 characters</span>
+        </small>
+
+        <!-- EMAIL -->
+        <div class="input-group mb-1 mt-3">
+          <span class="input-group-text">
+            <i class="fa fa-envelope"></i>
+          </span>
+          <input
+            name="email"
+            [(ngModel)]="email"
+            #emailRef="ngModel"
+            required
+            email
+            type="email"
+            class="form-control"
+            placeholder="Email Address"
+            autocomplete="username"
+          />
+        </div>
+        <small class="text-danger" *ngIf="emailRef.touched && emailRef.invalid">
+          <span *ngIf="emailRef.errors?.['required']">Email is required</span>
+          <span *ngIf="emailRef.errors?.['email']">Invalid email format</span>
+        </small>
+
+        <!-- PASSWORD -->
+        <div class="input-group mb-1 mt-3">
+          <span class="input-group-text">
+            <i class="fa fa-lock"></i>
+          </span>
+          <input
+            name="password"
+            [(ngModel)]="password"
+            #passwordRef="ngModel"
+            required
+            minlength="8"
+            pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]+$"
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            autocomplete="off"
+            (focus)="password='';"
+          />
+        </div>
+        <small class="text-danger" *ngIf="passwordRef.touched && passwordRef.invalid">
+          <span *ngIf="passwordRef.errors?.['required']">Password is required</span>
+          <span *ngIf="passwordRef.errors?.['minlength']">Minimum 8 characters</span>
+          <span *ngIf="passwordRef.errors?.['pattern']">
+            Must contain at least 1 letter and 1 number
+          </span>
+        </small>
+
+        <!-- ROLE -->
+        <div class="input-group mb-1 mt-3 hidden-role">
+          <span class="input-group-text">
+            <i class="fa fa-user-shield"></i>
+          </span>
+          <select
+            name="role"
+            [(ngModel)]="role"
+            #roleRef="ngModel"
+            required
+            class="form-control"
+            aria-label="Role"
+            autocomplete="off"
+          >
+            <!-- <option value="">Select Role</option> -->
+            <option value="user" selected>User</option>
+            <!-- <option value="admin">Admin</option> -->
+          </select>
+        </div>
+        <small class="text-danger" *ngIf="roleRef.touched && roleRef.invalid">
+          Role is required
+        </small>
+
+        <!-- BUTTON -->
+        <button
+          type="submit"
+          [disabled]="form.invalid || loading"
+          class="btn btn-primary w-100 fw-bold mt-4"
+        >
+          {{ loading ? 'Registering...' : 'Sign Up' }}
+        </button>
+
+        <!-- API ERROR -->
+        <p class="text-danger mt-2 text-center">{{ error }}</p>
+
+        <!-- LOGIN LINK -->
+        <p class="text-center mt-3">
+          Already have an account?
+          <a routerLink="/login" class="text-primary fw-bold">Login</a>
+        </p>
+
+      </form>
+      <!-- FORM END -->
+
+    </div>
+  </div>
+</div>

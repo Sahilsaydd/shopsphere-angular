@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Responsive site logo */
+.site-logo {
+	height: 36px;
+	width: auto;
+	display: inline-block;
+}
+
+@media (min-width: 768px) {
+	.site-logo { height: 42px; }
+}
+
+@media (min-width: 1200px) {
+	.site-logo { height: 52px; }
+}
+
+/* Ensure navbar brand aligns nicely */
+.navbar-brand img { vertical-align: middle; }

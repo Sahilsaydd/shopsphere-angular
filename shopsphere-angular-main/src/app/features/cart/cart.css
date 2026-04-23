@@ -1,0 +1,24 @@
+.card {
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.btn-primary {
+  background-color: #2f6fed;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #1e5bd8;
+}
+
+button i {
+  font-size: 12px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}

@@ -1,0 +1,78 @@
+.footer {
+  background: #f8f9fb;
+  color: #333;
+}
+
+.footer-text {
+  max-width: 280px;
+  font-size: 14px;
+  color: #6c757d;
+ 
+  padding: 10px;
+}
+
+.footer-title {
+  font-weight: 600;
+  margin-bottom: 15px;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer ul li {
+  margin-bottom: 8px;
+}
+
+.footer ul li a {
+  text-decoration: none;
+  color: #6c757d;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.footer ul li a:hover {
+  color: #0d6efd;
+}
+
+.social-icons i {
+  margin-right: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.social-icons i:hover {
+  color: #0d6efd;
+}
+
+.footer-bottom {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.payment-icons span {
+  margin-left: 15px;
+}
+
+/* Floating Chat Button */
+.chat-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #20c997;
+  color: white;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

@@ -1,0 +1,142 @@
+<section class="hero-section d-flex align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 text-white">
+        <span class="badge bg-light text-primary mb-3 px-3 py-2">
+          NEW COLLECTION 2026
+        </span>
+
+        <h1 class="display-4 fw-bold">
+          The Art of <br />
+          <span class="text-primary">Simplicity.</span>
+        </h1>
+
+        <p class="mt-3 text-light">
+          Elevate your daily rituals with our curated selection of high-end essentials designed for
+          the modern minimalists.
+        </p>
+
+        <div class="mt-4 d-flex gap-3">
+          <button class="btn btn-primary px-4 py-2">
+            <a routerLink="/shop">Shop Collection →</a>
+          </button>
+
+          <button class="btn btn-outline-light px-4 py-2">View Lookbook</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ Categories -->
+<app-categories></app-categories>
+
+<!-- ✅ Sustainable Section -->
+<div class="container my-5 rounded-2 anther_section py-3">
+  <div class="row align-items-center g-5">
+
+    <div class="col-lg-6">
+      <h1 class="fw-bold mb-4">
+        The Sustainable <br> Standard.
+      </h1>
+
+      <div class="p-3 mb-4 small text-muted">
+        Every piece in our collection is sourced with ethical integrity and
+        designed to last a lifetime. We believe in quality over quantity,
+        and purpose over trend.
+      </div>
+
+      <div class="d-flex gap-5">
+        <div>
+          <h4 class="fw-bold text-primary mb-0">100%</h4>
+          <small class="text-uppercase text-muted">Recycled Materials</small>
+        </div>
+
+        <div>
+          <h4 class="fw-bold text-primary mb-0">0%</h4>
+          <small class="text-uppercase text-muted">Plastic Packaging</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 text-center">
+      <img
+        src="assets/images/home/sustainable.jpg"
+        alt="Sustainable"
+        class="img-fluid rounded-4 shadow"
+      >
+    </div>
+
+  </div>
+</div>
+
+<!-- Trending Now -->
+<div class="container my-5">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold">Trending Now</h4>
+
+    <div>
+      <button
+        class="btn btn-light rounded-circle me-2 shadow-sm nav-btn"
+        (click)="prevProducts()"
+        [disabled]="currentIndex === 0"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      <button
+        class="btn btn-light rounded-circle shadow-sm nav-btn"
+        (click)="nextProducts()"
+        [disabled]="currentIndex + itemsPerPage >= allTrendingProducts.length"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Cards -->
+  <div class="scroll-container">
+
+    <div class="product-card" *ngFor="let product of visibleProducts">
+
+      <a [routerLink]="['/shop']" [queryParams]="{ product: product.id }">
+
+        <div class="card-img-wrapper position-relative">
+          <img [src]="product.image" alt="" class="img-fluid" />
+
+          <!-- Badge -->
+          <span *ngIf="product.rating >= 4.7" class="badge bg-warning text-dark">
+            HOT
+          </span>
+        </div>
+
+        <small class="text-uppercase text-muted">
+          {{ product.category }}
+        </small>
+
+        <h6 class="fw-semibold">
+          {{ product.name }}
+        </h6>
+
+        <!-- RATING -->
+        <div class="d-flex align-items-center mt-1">
+          <span class="text-warning me-2">
+            <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
+            <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
+          </span>
+          <small class="text-muted">{{ product.rating }}</small>
+        </div>
+
+        <p class="text-primary fw-semibold">
+          ₹ {{ product.price }}
+        </p>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

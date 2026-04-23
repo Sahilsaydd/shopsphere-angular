@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Living Spaces",
+    "desc": "Comfort for your home",
+    "image": "/assets/images/categories/living.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Self Rituals",
+    "desc": "Care essentials",
+    "image": "/assets/images/categories/self.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Tech",
+    "desc": "Smart devices",
+    "image": "/assets/images/categories/tech.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Objects",
+    "desc": "Luxury items",
+    "image": "/assets/images/categories/objects.jpg"  
+  }
+]
