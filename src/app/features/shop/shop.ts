@@ -7,6 +7,8 @@ import { WishlistService } from '../../core/services/wishlist';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-shop',
@@ -17,11 +19,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class Shop implements OnInit {
 
-  products: Product[] = [];
-  filteredProducts: Product[] = [];
-  paginatedProduct: Product[] = [];
+  products$ = new BehaviorSubject<Product[]>([]);
+  filteredProducts$ = new BehaviorSubject<Product[]>([]);
+  paginatedProduct$!: Observable<Product[]>;
   searchKeyword: string = '';
-  loading = false;
+  loading$ = new BehaviorSubject<boolean>(false);
   currentpage = 1;
   itemperpage = 6;
 
@@ -32,7 +34,7 @@ export class Shop implements OnInit {
   maxPrice = 1000;
   selectedPrice = 1000;
 
-  // ✅ POPUPS
+  // POPUPS
   showCartPopup = false;
   selectedProduct: any = null;
   showWishlistPopup = false;
@@ -52,18 +54,22 @@ ngOnInit(): void {
     this.searchKeyword = params['keyword'] || '';
     this.selectedCategory = params['category'] || 'All';
 
-    this.loading = true;
+    this.loading$.next(true);
 
     if (this.searchKeyword) {
       // 🔍 CALL SEARCH API
       this.productService.searchProducts(this.searchKeyword).subscribe(data => {
-        this.products = data;
+        this.products$.next(data);
+        console.log('Search results:', data);
+
         this.afterDataLoad();
       });
     } else {
       // 📦 LOAD ALL PRODUCTS
       this.productService.getProducts().subscribe(data => {
-        this.products = data;
+
+        this.products$.next(data);
+          console.log('All products loaded:', data);
         this.afterDataLoad();
       });
     }
@@ -86,7 +92,8 @@ ngOnInit(): void {
   }
 
   applyFilters() {
-    this.filteredProducts = this.products.filter(product => {
+    const products = this.products$.value;
+    const filtered = products.filter(product => {
       return (
         (this.selectedCategory === 'All' ||
           product.category === this.selectedCategory) &&
@@ -94,13 +101,18 @@ ngOnInit(): void {
       );
     });
 
+    this.filteredProducts$.next(filtered);
     this.updatePagination();
   }
 
   updatePagination() {
-    const start = (this.currentpage - 1) * this.itemperpage;
-    this.paginatedProduct = this.filteredProducts.slice(start, start + this.itemperpage);
-  }
+  this.paginatedProduct$ = this.filteredProducts$.pipe(
+    map(products => {
+      const start = (this.currentpage - 1) * this.itemperpage;
+      return products.slice(start, start + this.itemperpage);
+    })
+  );
+}
 
   nextPage() {
     this.currentpage++;
@@ -120,7 +132,7 @@ ngOnInit(): void {
     return rating % 1 >= 0.5;
   }
 
-  // ✅ CART POPUP
+  // CART POPUP
   openCartPopup(product: any) {
     this.selectedProduct = product;
     this.showCartPopup = true;
@@ -129,6 +141,12 @@ ngOnInit(): void {
   confirmAddToCart() {
     this.cartService.addToCart(this.selectedProduct);
     this.showCartPopup = false;
+  }
+
+  confirmAddToCartAndView() {
+    this.cartService.addToCart(this.selectedProduct);
+    this.showCartPopup = false;
+    this.goToCartpage();
   }
 
   closePopup() {
@@ -148,6 +166,15 @@ ngOnInit(): void {
     this.showWishlistPopup = false;
   }
 
+  confirmAddToWishlistAndView() {
+    if (this.selectedWishlistProduct) {
+      this.wishlistService.add(this.selectedWishlistProduct);
+      this.selectedWishlistProduct = null;
+    }
+    this.showWishlistPopup = false;
+    this.goToWishlist();
+  }
+
   closeWishlistPopup() {
     this.showWishlistPopup = false;
     this.selectedWishlistProduct = null;
@@ -163,15 +190,28 @@ ngOnInit(): void {
 
 
   afterDataLoad() {
-  this.loading = false;
+  this.loading$.next(false);
 
-  this.categories = ['All', ...new Set(this.products.map(p => p.category))];
+  const products = this.products$.value;
+  this.categories = ['All', ...new Set(products.map(p => p.category))];
 
-  const prices = this.products.map(p => p.price);
+  const prices = products.map(p => p.price);
   this.minPrice = Math.min(...prices);
   this.maxPrice = Math.max(...prices);
   this.selectedPrice = this.maxPrice;
 
   this.applyFilters();
 }
+
+
+
+// go to product navigate
+
+goToProduct(id:number){
+
+  console.log('Navigating to product with ID:', id);
+
+  this.router.navigate(['/product', id]);
+}
+
 }

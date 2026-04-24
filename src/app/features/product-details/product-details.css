@@ -1,0 +1,21 @@
+.product-main-img {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.thumbnail-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.thumbnail-img.active {
+  border: 2px solid #007bff;
+}
+
+.thumbnail-img:hover {
+  border: 2px solid #555;
+}

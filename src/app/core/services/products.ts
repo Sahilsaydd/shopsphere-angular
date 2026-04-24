@@ -12,12 +12,13 @@ export class Products {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ Get all products
+
   getProducts(): Observable<Product[]> {
+
     return this.http.get<Product[]>(this.url);
   }
 
-  // ✅ Search products
+
   searchProducts(keyword: string, category?: string): Observable<Product[]> {
     let url = `${this.url}/search/?keyword=${keyword}`;
 
@@ -26,5 +27,9 @@ export class Products {
     }
 
     return this.http.get<Product[]>(url);
+  }
+
+  getProductById(id: number | string): Observable<Product>{
+    return this.http.get<Product>(`${this.url}/${id}`);
   }
 }

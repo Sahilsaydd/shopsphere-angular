@@ -4,6 +4,8 @@ import { Products } from '../../core/services/products';
 import { Product } from '../../core/models/product';
 import { RouterModule } from '@angular/router';
 import { CategoriesComponent } from '../categories/categories';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -14,46 +16,55 @@ import { CategoriesComponent } from '../categories/categories';
 })
 export class Home implements OnInit {
 
-  allTrendingProducts: Product[] = [];
-  visibleProducts: Product[] = [];
+  allTrendingProducts$!: Observable<Product[]>;
+  visibleProducts$!: Observable<Product[]>;
 
-  currentIndex = 0;
+  private currentIndex$ = new BehaviorSubject<number>(0);
   itemsPerPage = 4;
 
   constructor(private productService: Products) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(data => {
-
-      // 🔥 Get top 10 trending (by rating)
-      this.allTrendingProducts = data
+    this.allTrendingProducts$ = this.productService.getProducts().pipe(
+      map(data => data
         .sort((a, b) => b.rating - a.rating)
-        .slice(0, 5);
+        .slice(0, 5)
+      ),
+      tap(products => {
+        console.log('Trending Products:', products);
+      })
+    );
 
-      this.updateVisibleProducts();
-      console.log('Trending Products:', this.allTrendingProducts);
-    });
-  }
-
-  updateVisibleProducts() {
-    this.visibleProducts = this.allTrendingProducts.slice(
-      this.currentIndex,
-      this.currentIndex + this.itemsPerPage
+    this.visibleProducts$ = this.currentIndex$.pipe(
+      switchMap(currentIndex =>
+        this.allTrendingProducts$.pipe(
+          map(products => products.slice(
+            currentIndex,
+            currentIndex + this.itemsPerPage
+          ))
+        )
+      )
     );
   }
 
   nextProducts() {
-    if (this.currentIndex + this.itemsPerPage < this.allTrendingProducts.length) {
-      this.currentIndex += this.itemsPerPage;
-      this.updateVisibleProducts();
-    }
+    this.allTrendingProducts$.subscribe(products => {
+      const nextIndex = this.currentIndex$.value + this.itemsPerPage;
+      if (nextIndex < products.length) {
+        this.currentIndex$.next(nextIndex);
+      }
+    });
   }
 
   prevProducts() {
-    if (this.currentIndex > 0) {
-      this.currentIndex -= this.itemsPerPage;
-      this.updateVisibleProducts();
+    const prevIndex = this.currentIndex$.value - this.itemsPerPage;
+    if (prevIndex >= 0) {
+      this.currentIndex$.next(prevIndex);
     }
+  }
+
+  get currentIndex(): number {
+    return this.currentIndex$.value;
   }
 
   getFullStars(rating: number) {

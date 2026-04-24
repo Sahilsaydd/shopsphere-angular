@@ -7,11 +7,16 @@ export const routes: Routes = [
     {
       path:'register',
       loadComponent:()=> import('./features/register/register').then((m)=>m.Register)
-      
+
     },
     {
         path:"shop",
         loadComponent:()=> import('./features/shop/shop').then((m)=>m.Shop ),canActivate:[authGuard]
+    },
+    // Now i want to add a route for product details page, which will be lazy loaded and will have a dynamic segment for product ID
+    {
+      path: "product/:id",
+      loadComponent:()=>import('./features/product-details/product-details').then((m)=>m.ProductDetails),canActivate:[authGuard]
     },
     {
         path:"cart",

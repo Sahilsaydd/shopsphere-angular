@@ -1,6 +1,5 @@
 <div class="container-fluid  my-5">
 
-  <!-- 🔍 HEADER -->
 
   <div class="mb-4">
     <h2 class="fw-bold">Curated Collections</h2>
@@ -55,14 +54,13 @@
 <!-- ================= RIGHT PRODUCTS ================= -->
 <div class="col-md-8">
 
-  <!-- ⏳ LOADING -->
-  <div *ngIf="loading" class="text-center mt-5">
-    <div class="spinner-border text-primary"></div>
-    <p class="mt-2 text-muted">Loading products...</p>
-  </div>
+<div *ngIf="loading$ | async" class="text-center mt-5">
+  <div class="spinner-border text-primary"></div>
+  <p class="mt-2 text-muted">Loading products...</p>
+</div>
 
-  <!-- ❌ NO RESULTS -->
-  <div *ngIf="!loading && filteredProducts.length === 0" class="text-center mt-5">
+<div *ngIf="!(loading$ | async) && (filteredProducts$ | async)?.length === 0"
+     class="text-center mt-5">
     <img src="assets/images/no-data.png" width="180" class="mb-3" alt="No products found" />
     <h4>No results found</h4>
     <p class="text-muted">
@@ -73,82 +71,90 @@
     </button>
   </div>
 
-  <!-- ✅ PRODUCT GRID -->
-  <div class="row  py-3" *ngIf="!loading && filteredProducts.length > 0">
+  <div class="row py-3"
+     *ngIf="!(loading$ | async) && (filteredProducts$ | async)?.length! > 0">
+  <div class="col-lg-4 col-md-12 mb-4" *ngFor="let product of paginatedProduct$ | async">
 
-    <div class="col-lg-4 col-md-12 mb-4  " *ngFor="let product of paginatedProduct">
+  <div class="card h-100 shadow-sm border-0 product-card"
+       (click)="goToProduct(product.id)" style="cursor: pointer;">
 
-      <div class="card h-100 shadow-sm border-0 product-card">
+    <div class="position-relative">
+      <img
+        [src]="product.product_img"
+        alt="{{ product.name }}"
+        class="card-img-top p-3 product-image"
+      />
 
-        <!-- IMAGE -->
-        <div class="position-relative">
-          <img
-            [src]="product.image"
-            alt="{{ product.name }}"
-            class="card-img-top p-3 product-image"
-          />
+      <span
+        *ngIf="product.discount_percentage > 0"
+        class="badge bg-danger position-absolute top-0 start-0 m-2"
+      >
+        {{ product.discount_percentage }}% OFF
+      </span>
+    </div>
 
-          <span
-            *ngIf="product.badge"
-            class="badge bg-warning text-dark position-absolute top-0 start-0 m-2"
-          >
-            {{ product.badge }}
-          </span>
+    <div class="card-body d-flex flex-column">
+
+      <span class="text-muted small mb-1">
+        {{ product.category }}
+      </span>
+
+      <h6 class="fw-bold mb-1">
+        {{ product.name }}
+      </h6>
+
+      <div class="mb-2">
+        <span class="text-warning">
+          <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
+          <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
+        </span>
+        <small class="text-muted ms-1">{{ product.rating }}</small>
+      </div>
+
+      <p class="text-muted small flex-grow-1">
+        {{ product.description | slice:0:80 }}...
+      </p>
+
+      <div class="mt-auto">
+
+        <span class="fw-bold text-dark fs-5">
+          ₹ {{ product.final_price }}
+        </span>
+
+        <span class="text-muted text-decoration-line-through ms-2">
+          ₹ {{ product.price }}
+        </span>
+
+        <span class="text-success fw-bold ms-2">
+          {{ product.discount_percentage }}% OFF
+        </span>
+
+        <div class="text-success small">
+          You saved ₹ {{ product.you_saved }}
         </div>
 
-        <!-- BODY -->
-        <div class="card-body d-flex flex-column">
+      </div>
 
-          <!-- CATEGORY -->
-          <span class="text-muted small mb-1">
-            {{ product.category }}
-          </span>
+      <div class="d-flex justify-content-between mt-3">
+        <button type="button"
+          class="btn btn-outline-danger btn-sm"
+          (click)="openWishlistPopup(product); $event.stopPropagation()">
+          <i class="fa fa-heart"></i>
+        </button>
 
-          <!-- NAME -->
-          <h6 class="fw-bold mb-1">
-            {{ product.name }}
-          </h6>
-
-          <!-- RATING -->
-          <div class="mb-2">
-            <span class="text-warning">
-              <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
-              <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
-            </span>
-            <small class="text-muted ms-1">{{ product.rating }}</small>
-          </div>
-
-          <!-- DESCRIPTION -->
-          <p class="text-muted small flex-grow-1">
-            {{ product.desc }}
-          </p>
-
-          <!-- PRICE + ACTION -->
-          <div class="d-flex justify-content-between align-items-center mt-2">
-            <span class="fw-bold text-primary">₹ {{ product.price }}</span>
-
-            <div class="d-flex gap-2">
-              <button class="btn btn-outline-danger btn-sm" aria-label="Add product to wishlist"
-                (click)="openWishlistPopup(product)">
-                <i class="fa fa-heart"></i>
-              </button>
-
-              <button class="btn btn-primary btn-sm" aria-label="Add product to cart"
-                (click)="openCartPopup(product)">
-                <i class="fa fa-shopping-cart"></i>
-              </button>
-            </div>
-          </div>
-
-        </div>
+        <button type="button"
+          class="btn btn-primary btn-sm"
+          (click)="openCartPopup(product); $event.stopPropagation()">
+          <i class="fa fa-shopping-cart"></i>
+        </button>
       </div>
 
     </div>
-
+  </div>
+</div>
   </div>
 
-  <!-- PAGINATION -->
-  <div class="d-flex justify-content-center mt-4" *ngIf="filteredProducts.length > 0">
+  <div class="d-flex justify-content-center mt-4" *ngIf="filteredProducts$ | async as filteredProducts">
 
     <button class="btn btn-outline-primary me-2"
       (click)="prevPage()"
@@ -168,7 +174,6 @@
 
 </div>
 
-  <!-- CART POPUP -->
   <div class="cart-popup-overlay" *ngIf="showCartPopup">
     <div class="cart-popup">
       <h5 class="fw-bold">Add to Cart</h5>
@@ -176,18 +181,19 @@
       <div class="d-flex justify-content-end gap-2">
         <button class="btn btn-outline-secondary" (click)="closePopup()">Cancel</button>
         <button class="btn btn-primary" (click)="confirmAddToCart()">Confirm</button>
+        <button class="btn btn-outline-primary" (click)="confirmAddToCartAndView()">Continue to Shopping</button>
       </div>
     </div>
   </div>
 
-  <!-- WISHLIST POPUP -->
   <div class="cart-popup-overlay" *ngIf="showWishlistPopup">
     <div class="cart-popup">
       <h5 class="fw-bold">Add to Wishlist</h5>
       <p class="mb-3">Add <strong>{{ selectedWishlistProduct?.name }}</strong> to your wishlist?</p>
       <div class="d-flex justify-content-end gap-2">
         <button class="btn btn-outline-secondary" (click)="closeWishlistPopup()">Cancel</button>
-        <button class="btn btn-primary" (click)="confirmAddToWishlist()">Confirm</button>
+        <button type="button" class="btn btn-outline-primary" (click)="confirmAddToWishlistAndView()">Continue to Shopping</button>
+        <button type="button" class="btn btn-primary" (click)="confirmAddToWishlist()">Confirm</button>
       </div>
     </div>
   </div>

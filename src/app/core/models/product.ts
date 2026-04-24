@@ -3,8 +3,13 @@ export interface Product {
   name: string;
   category: string;
   price: number;
+  final_price: number;
+  you_saved: number;
+  discount_percentage: number;
   rating: number;
-  image: string;
-  badge?: string;
-  desc: string;
+  stock: number;
+  product_img: string;
+  description: string;
+  product_images?: string[];
+
 }
