@@ -19,3 +19,41 @@
 .thumbnail-img:hover {
   border: 2px solid #555;
 }
+
+.cart-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 16px;
+}
+
+.cart-popup {
+  background: #fff;
+  width: min(400px, 100%);
+  border-radius: 12px;
+  padding: 20px;
+  animation: popupFade 0.3s ease;
+}
+
+@keyframes popupFade {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .cart-popup {
+    width: 90% !important;
+  }
+}

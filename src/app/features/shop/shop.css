@@ -114,3 +114,10 @@
     opacity: 1;
   }
 }
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .cart-popup {
+    width: 90% !important;
+  }
+}

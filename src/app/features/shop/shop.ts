@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Product } from '../../core/models/product';
 import { Products } from '../../core/services/products';
 import { Cart } from '../../core/services/cart';
@@ -22,8 +22,10 @@ export class Shop implements OnInit {
   products$ = new BehaviorSubject<Product[]>([]);
   filteredProducts$ = new BehaviorSubject<Product[]>([]);
   paginatedProduct$!: Observable<Product[]>;
+
   searchKeyword: string = '';
   loading$ = new BehaviorSubject<boolean>(false);
+
   currentpage = 1;
   itemperpage = 6;
 
@@ -34,48 +36,47 @@ export class Shop implements OnInit {
   maxPrice = 1000;
   selectedPrice = 1000;
 
-  // POPUPS
-  showCartPopup = false;
-  selectedProduct: any = null;
+  // CART
+  addingProductIds = new Set<number>();
+  showCartConfirm = false;
+  selectedCartProduct: Product | null = null;
+  cartQuantity: number = 1;
+
+  // WISHLIST
   showWishlistPopup = false;
-  selectedWishlistProduct: any = null;
+  selectedWishlistProduct: Product | null = null;
 
   constructor(
     private productService: Products,
     private cartService: Cart,
     private wishlistService: WishlistService,
     public router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
-ngOnInit(): void {
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.searchKeyword = params['keyword'] || '';
+      this.selectedCategory = params['category'] || 'All';
 
-  this.route.queryParams.subscribe(params => {
-    this.searchKeyword = params['keyword'] || '';
-    this.selectedCategory = params['category'] || 'All';
+      this.loading$.next(true);
 
-    this.loading$.next(true);
+      if (this.searchKeyword) {
+        this.productService.searchProducts(this.searchKeyword).subscribe(data => {
+          this.products$.next(data);
+          this.afterDataLoad();
+        });
+      } else {
+        this.productService.getProducts().subscribe(data => {
+          this.products$.next(data);
+          this.afterDataLoad();
+        });
+      }
+    });
+  }
 
-    if (this.searchKeyword) {
-      // 🔍 CALL SEARCH API
-      this.productService.searchProducts(this.searchKeyword).subscribe(data => {
-        this.products$.next(data);
-        console.log('Search results:', data);
-
-        this.afterDataLoad();
-      });
-    } else {
-      // 📦 LOAD ALL PRODUCTS
-      this.productService.getProducts().subscribe(data => {
-
-        this.products$.next(data);
-          console.log('All products loaded:', data);
-        this.afterDataLoad();
-      });
-    }
-  });
-
-}
+  // FILTERS
   filterByCategory(category: string) {
     this.selectedCategory = category;
 
@@ -93,6 +94,7 @@ ngOnInit(): void {
 
   applyFilters() {
     const products = this.products$.value;
+
     const filtered = products.filter(product => {
       return (
         (this.selectedCategory === 'All' ||
@@ -102,17 +104,21 @@ ngOnInit(): void {
     });
 
     this.filteredProducts$.next(filtered);
+
+    // ✅ FIX: reset page
+    this.currentpage = 1;
+
     this.updatePagination();
   }
 
   updatePagination() {
-  this.paginatedProduct$ = this.filteredProducts$.pipe(
-    map(products => {
-      const start = (this.currentpage - 1) * this.itemperpage;
-      return products.slice(start, start + this.itemperpage);
-    })
-  );
-}
+    this.paginatedProduct$ = this.filteredProducts$.pipe(
+      map(products => {
+        const start = (this.currentpage - 1) * this.itemperpage;
+        return products.slice(start, start + this.itemperpage);
+      })
+    );
+  }
 
   nextPage() {
     this.currentpage++;
@@ -124,6 +130,7 @@ ngOnInit(): void {
     this.updatePagination();
   }
 
+  // UI HELPERS
   getFullStars(rating: number) {
     return Array.from({ length: Math.floor(rating) });
   }
@@ -132,86 +139,119 @@ ngOnInit(): void {
     return rating % 1 >= 0.5;
   }
 
-  // CART POPUP
-  openCartPopup(product: any) {
-    this.selectedProduct = product;
-    this.showCartPopup = true;
+  // ================= CART =================
+  addProductToCart(product: Product) {
+    this.selectedCartProduct = product;
+    this.cartQuantity = 1;
+    this.showCartConfirm = true;
+    this.cdr.detectChanges();
+  }
+
+  closeCartConfirm() {
+    this.showCartConfirm = false;
+    this.selectedCartProduct = null;
+    this.cartQuantity = 1;
+    this.cdr.detectChanges();
   }
 
   confirmAddToCart() {
-    this.cartService.addToCart(this.selectedProduct);
-    this.showCartPopup = false;
+    if (!this.selectedCartProduct || this.addingProductIds.has(this.selectedCartProduct.id)) return;
+
+    this.addingProductIds.add(this.selectedCartProduct.id);
+
+    this.cartService.addToCart(this.selectedCartProduct.id, this.cartQuantity).subscribe({
+      next: () => {
+        this.addingProductIds.delete(this.selectedCartProduct!.id);
+        this.closeCartConfirm();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('Cart error:', err);
+        this.addingProductIds.delete(this.selectedCartProduct!.id);
+        this.closeCartConfirm();
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   confirmAddToCartAndView() {
-    this.cartService.addToCart(this.selectedProduct);
-    this.showCartPopup = false;
-    this.goToCartpage();
+    if (this.selectedCartProduct && !this.addingProductIds.has(this.selectedCartProduct.id)) {
+      this.addingProductIds.add(this.selectedCartProduct.id);
+
+      this.cartService.addToCart(this.selectedCartProduct.id, this.cartQuantity).subscribe({
+        next: () => {
+          this.addingProductIds.delete(this.selectedCartProduct!.id);
+          this.closeCartConfirm();
+          this.cdr.detectChanges();
+          this.router.navigate(['/cart']);
+        },
+        error: (err) => {
+          console.error('Cart error:', err);
+          this.addingProductIds.delete(this.selectedCartProduct!.id);
+          this.closeCartConfirm();
+          this.cdr.detectChanges();
+        }
+      });
+    }
   }
 
-  closePopup() {
-    this.showCartPopup = false;
+  increaseCartQty() {
+    if (
+      this.selectedCartProduct &&
+      this.selectedCartProduct.stock &&
+      this.cartQuantity < this.selectedCartProduct.stock
+    ) {
+      this.cartQuantity++;
+      this.cdr.detectChanges();
+    }
   }
 
-  openWishlistPopup(product: any) {
+  decreaseCartQty() {
+    if (this.cartQuantity > 1) {
+      this.cartQuantity--;
+      this.cdr.detectChanges();
+    }
+  }
+
+  // ================= WISHLIST =================
+  openWishlistPopup(product: Product) {
     this.selectedWishlistProduct = product;
     this.showWishlistPopup = true;
-  }
-
-  confirmAddToWishlist() {
-    if (this.selectedWishlistProduct) {
-      this.wishlistService.add(this.selectedWishlistProduct);
-      this.selectedWishlistProduct = null;
-    }
-    this.showWishlistPopup = false;
-  }
-
-  confirmAddToWishlistAndView() {
-    if (this.selectedWishlistProduct) {
-      this.wishlistService.add(this.selectedWishlistProduct);
-      this.selectedWishlistProduct = null;
-    }
-    this.showWishlistPopup = false;
-    this.goToWishlist();
+    this.cdr.detectChanges();
   }
 
   closeWishlistPopup() {
     this.showWishlistPopup = false;
     this.selectedWishlistProduct = null;
+    this.cdr.detectChanges();
   }
 
-  goToWishlist() {
+  confirmAddToWishlistAndView() {
+    if (this.selectedWishlistProduct) {
+      this.wishlistService.add(this.selectedWishlistProduct);
+    }
+    this.closeWishlistPopup();
     this.router.navigate(['/wishlist']);
   }
 
-  goToCartpage() {
-    this.router.navigate(['/cart']);
+  // ================= DATA LOAD =================
+  afterDataLoad() {
+    this.loading$.next(false);
+
+    const products = this.products$.value;
+
+    this.categories = ['All', ...new Set(products.map(p => p.category))];
+
+    const prices = products.map(p => p.price);
+    this.minPrice = Math.min(...prices);
+    this.maxPrice = Math.max(...prices);
+    this.selectedPrice = this.maxPrice;
+
+    this.applyFilters();
   }
 
-
-  afterDataLoad() {
-  this.loading$.next(false);
-
-  const products = this.products$.value;
-  this.categories = ['All', ...new Set(products.map(p => p.category))];
-
-  const prices = products.map(p => p.price);
-  this.minPrice = Math.min(...prices);
-  this.maxPrice = Math.max(...prices);
-  this.selectedPrice = this.maxPrice;
-
-  this.applyFilters();
-}
-
-
-
-// go to product navigate
-
-goToProduct(id:number){
-
-  console.log('Navigating to product with ID:', id);
-
-  this.router.navigate(['/product', id]);
-}
-
+  // NAVIGATION
+  goToProduct(id: number) {
+    this.router.navigate(['/product', id]);
+  }
 }

@@ -40,8 +40,13 @@
         {{ product.name }}
       </h2>
 
-      <div class="mb-2">
-        Rating: {{ product.rating }}
+      <div class="mb-2 d-flex align-items-center gap-2">
+        <span class="text-warning">
+          <i class="fa fa-star" *ngFor="let star of getFullStars(product.rating)"></i>
+          <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
+          <i class="far fa-star" *ngFor="let star of getEmptyStars(product.rating)"></i>
+        </span>
+        <small class="text-muted">{{ product.rating }}</small>
       </div>
 
       <p class="text-muted">
@@ -73,6 +78,7 @@
           [class.text-danger]="product.stock === 0"
         >
           {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+          ({{ product.stock }} available)
         </span>
       </div>
 
@@ -83,12 +89,56 @@
       </div>
 
       <div class="d-flex gap-3">
-        <button class="btn btn-primary" (click)="addToCart()">
+        <button class="btn btn-primary" (click)="openCartConfirm()">
           Add to Cart
         </button>
 
-        <button class="btn btn-success" (click)="buyNow()">
+        <button class="btn btn-success" (click)="openBuyNowConfirm()">
           Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-popup-overlay" *ngIf="showCartConfirm">
+    <div class="cart-popup">
+      <h5 class="fw-bold">Add to Cart</h5>
+      <p class="mb-3">
+        Are you sure you want to add
+        <strong>{{ product_details?.name }}</strong>
+        to your cart?
+      </p>
+      <p class="mb-3">
+        Quantity: <strong>{{ quantity }}</strong>
+      </p>
+      <div class="d-flex justify-content-end gap-2 flex-wrap">
+        <button class="btn btn-outline-secondary" (click)="closeCartConfirm()">
+          Cancel
+        </button>
+        <button class="btn btn-primary" (click)="confirmAddToCart()">
+          Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-popup-overlay" *ngIf="showBuyNowConfirm">
+    <div class="cart-popup">
+      <h5 class="fw-bold">Buy Now</h5>
+      <p class="mb-3">
+        Are you sure you want to buy
+        <strong>{{ product_details?.name }}</strong>
+        now?
+      </p>
+      <p class="mb-3">
+        Quantity: <strong>{{ quantity }}</strong>
+      </p>
+      <div class="d-flex justify-content-end gap-2 flex-wrap">
+        <button class="btn btn-outline-secondary" (click)="closeBuyNowConfirm()">
+          Cancel
+        </button>
+        <button class="btn btn-success" (click)="confirmBuyNow()">
+          Confirm
         </button>
       </div>
     </div>

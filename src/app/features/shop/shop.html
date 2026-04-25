@@ -144,7 +144,8 @@
 
         <button type="button"
           class="btn btn-primary btn-sm"
-          (click)="openCartPopup(product); $event.stopPropagation()">
+          [disabled]="addingProductIds.has(product.id)"
+          (click)="addProductToCart(product); $event.stopPropagation()">
           <i class="fa fa-shopping-cart"></i>
         </button>
       </div>
@@ -174,18 +175,6 @@
 
 </div>
 
-  <div class="cart-popup-overlay" *ngIf="showCartPopup">
-    <div class="cart-popup">
-      <h5 class="fw-bold">Add to Cart</h5>
-      <p class="mb-3">Are you sure you want to add <strong>{{ selectedProduct?.name }}</strong> to your cart?</p>
-      <div class="d-flex justify-content-end gap-2">
-        <button class="btn btn-outline-secondary" (click)="closePopup()">Cancel</button>
-        <button class="btn btn-primary" (click)="confirmAddToCart()">Confirm</button>
-        <button class="btn btn-outline-primary" (click)="confirmAddToCartAndView()">Continue to Shopping</button>
-      </div>
-    </div>
-  </div>
-
   <div class="cart-popup-overlay" *ngIf="showWishlistPopup">
     <div class="cart-popup">
       <h5 class="fw-bold">Add to Wishlist</h5>
@@ -193,7 +182,39 @@
       <div class="d-flex justify-content-end gap-2">
         <button class="btn btn-outline-secondary" (click)="closeWishlistPopup()">Cancel</button>
         <button type="button" class="btn btn-outline-primary" (click)="confirmAddToWishlistAndView()">Continue to Shopping</button>
-        <button type="button" class="btn btn-primary" (click)="confirmAddToWishlist()">Confirm</button>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-popup-overlay" *ngIf="showCartConfirm">
+    <div class="cart-popup">
+      <h5 class="fw-bold">Add to Cart</h5>
+      <p class="mb-3">
+        Are you sure you want to add
+        <strong>{{ selectedCartProduct?.name }}</strong>
+        to your cart?
+      </p>
+      <div class="mb-3">
+        <label class="form-label">Quantity:</label>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-outline-secondary btn-sm" (click)="decreaseCartQty()">-</button>
+          <span class="fw-bold" style="min-width: 30px; text-align: center;">{{ cartQuantity }}</span>
+          <button class="btn btn-outline-secondary btn-sm"
+            [disabled]="selectedCartProduct?.stock! <= cartQuantity"
+            (click)="increaseCartQty()">+</button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 flex-wrap">
+        <button class="btn btn-outline-secondary" (click)="closeCartConfirm()">
+          Cancel
+        </button>
+        <button class="btn btn-outline-primary" (click)="confirmAddToCartAndView()">
+          Continue to Shopping
+        </button>
+        <button class="btn btn-primary" (click)="confirmAddToCart()">
+          Confirm
+        </button>
       </div>
     </div>
   </div>

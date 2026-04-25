@@ -23,6 +23,8 @@ export class ProductDetails implements OnInit {
   quantity: number = 1;
   loading = false;
   errorMessage = '';
+  showCartConfirm = false;
+  showBuyNowConfirm = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -87,27 +89,76 @@ export class ProductDetails implements OnInit {
   increaseQty() {
     if (this.product_details && this.quantity < this.product_details.stock) {
       this.quantity++;
+      this.cdr.detectChanges();
     }
   }
 
   decreaseQty() {
     if (this.quantity > 1) {
       this.quantity--;
+      this.cdr.detectChanges();
     }
   }
 
-  addToCart() {
+  getFullStars(rating: number) {
+    return Array.from({ length: Math.floor(rating) });
+  }
+
+  hasHalfStar(rating: number) {
+    return rating % 1 >= 0.5;
+  }
+
+  getEmptyStars(rating: number) {
+    const filledStars = Math.floor(rating);
+    const halfStar = this.hasHalfStar(rating) ? 1 : 0;
+
+    return Array.from({ length: Math.max(0, 5 - filledStars - halfStar) });
+  }
+
+  openCartConfirm() {
+    if (!this.product_details) return;
+    this.showCartConfirm = true;
+    this.cdr.detectChanges();
+  }
+
+  closeCartConfirm() {
+    this.showCartConfirm = false;
+    this.cdr.detectChanges();
+  }
+
+  confirmAddToCart() {
     if (!this.product_details) return;
 
-    this.cartService.addToCart({
-      ...this.product_details,
-      quantity: this.quantity
+    this.cartService.addToCart(this.product_details.id, this.quantity).subscribe({
+      next: () => {
+        this.showCartConfirm = false;
+        this.quantity = 1;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Failed to add product to cart:', error);
+        this.showCartConfirm = false;
+        this.cdr.detectChanges();
+      }
     });
   }
 
-  buyNow() {
+  openBuyNowConfirm() {
+    if (!this.product_details) return;
+    this.showBuyNowConfirm = true;
+    this.cdr.detectChanges();
+  }
+
+  closeBuyNowConfirm() {
+    this.showBuyNowConfirm = false;
+    this.cdr.detectChanges();
+  }
+
+  confirmBuyNow() {
     if (!this.product_details) return;
 
+    this.showBuyNowConfirm = false;
+    this.cdr.detectChanges();
     this.router.navigate(['/order_products'], {
       queryParams: {
         product_id: this.product_details.id,
