@@ -122,25 +122,73 @@
     </div>
   </div>
 
-  <div class="cart-popup-overlay" *ngIf="showBuyNowConfirm">
-    <div class="cart-popup">
-      <h5 class="fw-bold">Buy Now</h5>
-      <p class="mb-3">
-        Are you sure you want to buy
-        <strong>{{ product_details?.name }}</strong>
-        now?
-      </p>
-      <p class="mb-3">
-        Quantity: <strong>{{ quantity }}</strong>
-      </p>
-      <div class="d-flex justify-content-end gap-2 flex-wrap">
-        <button class="btn btn-outline-secondary" (click)="closeBuyNowConfirm()">
-          Cancel
-        </button>
-        <button class="btn btn-success" (click)="confirmBuyNow()">
-          Confirm
-        </button>
+ <div class="cart-popup-overlay" *ngIf="showBuyNowConfirm">
+  <div class="cart-popup p-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-bold mb-0">🛍️ Quick Checkout</h5>
+      <i class="fa fa-times cursor-pointer" (click)="closeBuyNowConfirm()"></i>
+    </div>
+
+    <!-- PRODUCT PREVIEW -->
+    <div class="d-flex align-items-center gap-3 mb-3 p-2 border rounded-3 bg-light">
+      <img alt=""
+        [src]="selectedImage"
+        style="width: 60px; height: 60px; object-fit: cover;"
+        class="rounded"
+      >
+      <div>
+        <h6 class="mb-1">{{ product_details?.name }}</h6>
+        <small class="text-muted">Qty: {{ quantity }}</small><br>
+        <strong class="text-primary">
+          ₹ {{ totalPrice }}
+        </strong>
       </div>
     </div>
+
+    <!-- FORM -->
+    <div class="mb-2">
+      <label class="small text-muted">Full Name</label>
+      <input
+        [(ngModel)]="userData.name"
+        class="form-control"
+        placeholder="Enter your name"
+      >
+    </div>
+
+    <div class="mb-2">
+      <label class="small text-muted">Phone Number</label>
+      <input
+        [(ngModel)]="userData.phone"
+        class="form-control"
+        placeholder="Enter your phone"
+      >
+    </div>
+
+    <div class="mb-3">
+      <label class="small text-muted">Delivery Address</label>
+      <textarea
+        [(ngModel)]="userData.address"
+        class="form-control"
+        rows="2"
+        placeholder="Enter full address"
+      ></textarea>
+    </div>
+
+    <!-- CTA -->
+    <div class="d-grid gap-2">
+
+      <button class="btn btn-success fw-bold" (click)="confirmBuyNow()">
+        Continue to Review →
+      </button>
+
+      <button class="btn btn-outline-secondary" (click)="closeBuyNowConfirm()">
+        Cancel
+      </button>
+
+    </div>
+
   </div>
+</div>
 </div>

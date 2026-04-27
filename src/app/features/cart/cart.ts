@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Cart } from '../../core/services/cart';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartItem } from '../../core/models/cart_model';
 
 interface UiCartItem {
@@ -31,7 +31,7 @@ export class CartComponent implements OnInit {
   tax = 0;
   total = 0;
 
-  constructor(private cartService: Cart, private cdr: ChangeDetectorRef) {}
+  constructor(private router:Router,private cartService: Cart, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadCart();
@@ -93,5 +93,10 @@ export class CartComponent implements OnInit {
       next: () => this.loadCart(),
       error: (err) => console.error(err)
     });
+  }
+
+
+    goToProduct(id: number) {
+    this.router.navigate(['/product', id]);
   }
 }

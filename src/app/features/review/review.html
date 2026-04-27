@@ -1,0 +1,21 @@
+<div class="container my-5" *ngIf="product">
+
+  <h3>Order Review</h3>
+  <div class="card p-3 mb-3">
+    <h5>{{ product.name }}</h5>
+    <p>Quantity: {{ quantity }}</p>
+    <h6>Total: ₹ {{ totalPrice }}</h6>
+  </div>
+
+  <div class="card p-3 mb-3">
+    <h5>User Details</h5>
+    <p><strong>Name:</strong> {{ userData.name }}</p>
+    <p><strong>Phone:</strong> {{ userData.phone }}</p>
+    <p><strong>Address:</strong> {{ userData.address }}</p>
+  </div>
+
+  <button class="btn btn-success" (click)="placeOrder()">
+    Order Now
+  </button>
+
+</div>

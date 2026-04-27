@@ -7,15 +7,17 @@ import { EMPTY } from 'rxjs';
 import { Products } from '../../core/services/products';
 import { Product } from '../../core/models/product';
 import { Cart } from '../../core/services/cart';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-details.html',
   styleUrls: ['./product-details.css'],
 })
 export class ProductDetails implements OnInit {
+
   private readonly destroyRef = inject(DestroyRef);
 
   product_details: Product | null = null;
@@ -23,8 +25,15 @@ export class ProductDetails implements OnInit {
   quantity: number = 1;
   loading = false;
   errorMessage = '';
+
   showCartConfirm = false;
   showBuyNowConfirm = false;
+
+  userData = {
+    name: '',
+    phone: '',
+    address: ''
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -43,18 +52,13 @@ export class ProductDetails implements OnInit {
 
           this.loading = true;
           this.errorMessage = '';
-          this.product_details = null;
-          this.selectedImage = '';
-          this.quantity = 1;
 
-          if (!id) {
-            throw new Error('Missing product id in route.');
-          }
+          if (!id) throw new Error('Missing product id');
 
           return this.productService.getProductById(id).pipe(
             catchError((error) => {
-              console.error('Failed to load product details:', error);
-              this.errorMessage = 'Unable to load this product right now.';
+              console.error(error);
+              this.errorMessage = 'Failed to load product';
               return EMPTY;
             }),
             finalize(() => {
@@ -64,39 +68,29 @@ export class ProductDetails implements OnInit {
           );
         })
       )
-      .subscribe({
-        next: (product) => {
-          console.log('Product details response:', product);
-          this.product_details = product;
-          this.selectedImage = this.getPrimaryImage(product);
-          this.cdr.detectChanges();
-        }
+      .subscribe((product) => {
+        this.product_details = product;
+        this.selectedImage = this.getPrimaryImage(product);
       });
   }
 
   private getPrimaryImage(product: Product): string {
-    if (Array.isArray(product.product_images) && product.product_images.length > 0) {
-      return product.product_images[0];
-    }
-
-    return product.product_img || '';
+    return product.product_images?.[0] || product.product_img || '';
   }
 
-  changeImage(image: string) {
-    this.selectedImage = image;
+  changeImage(img: string) {
+    this.selectedImage = img;
   }
 
   increaseQty() {
     if (this.product_details && this.quantity < this.product_details.stock) {
       this.quantity++;
-      this.cdr.detectChanges();
     }
   }
 
   decreaseQty() {
     if (this.quantity > 1) {
       this.quantity--;
-      this.cdr.detectChanges();
     }
   }
 
@@ -109,21 +103,21 @@ export class ProductDetails implements OnInit {
   }
 
   getEmptyStars(rating: number) {
-    const filledStars = Math.floor(rating);
-    const halfStar = this.hasHalfStar(rating) ? 1 : 0;
+    const full = Math.floor(rating);
+    const half = this.hasHalfStar(rating) ? 1 : 0;
+    return Array.from({ length: 5 - full - half });
+  }
 
-    return Array.from({ length: Math.max(0, 5 - filledStars - halfStar) });
+  get totalPrice(): number {
+    return (this.product_details?.final_price ?? 0) * this.quantity;
   }
 
   openCartConfirm() {
-    if (!this.product_details) return;
     this.showCartConfirm = true;
-    this.cdr.detectChanges();
   }
 
   closeCartConfirm() {
     this.showCartConfirm = false;
-    this.cdr.detectChanges();
   }
 
   confirmAddToCart() {
@@ -133,36 +127,34 @@ export class ProductDetails implements OnInit {
       next: () => {
         this.showCartConfirm = false;
         this.quantity = 1;
-        this.cdr.detectChanges();
-      },
-      error: (error) => {
-        console.error('Failed to add product to cart:', error);
-        this.showCartConfirm = false;
-        this.cdr.detectChanges();
       }
     });
   }
 
   openBuyNowConfirm() {
-    if (!this.product_details) return;
+    this.userData = { name: '', phone: '', address: '' };
     this.showBuyNowConfirm = true;
-    this.cdr.detectChanges();
   }
 
   closeBuyNowConfirm() {
     this.showBuyNowConfirm = false;
-    this.cdr.detectChanges();
   }
 
   confirmBuyNow() {
     if (!this.product_details) return;
 
+    if (!this.userData.name || !this.userData.phone || !this.userData.address) {
+      alert("Please fill all fields");
+      return;
+    }
+
     this.showBuyNowConfirm = false;
-    this.cdr.detectChanges();
-    this.router.navigate(['/order_products'], {
-      queryParams: {
-        product_id: this.product_details.id,
-        quantity: this.quantity
+
+    this.router.navigate(['/review'], {
+      state: {
+        product: this.product_details,
+        quantity: this.quantity,
+        user: this.userData
       }
     });
   }
