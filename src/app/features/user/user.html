@@ -10,12 +10,12 @@
       <h5 class="fw-bold mb-1">{{userDetails?.name }}</h5>
       <h5 class="fw-bold mb-1">{{ userDetails?.email  }}</h5>
       <div class="d-flex gap-2 flex-wrap">
-        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">👤 Member</span>
-        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">🆔 ID: {{ userDetails?.id }}</span>
+        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);"><i class="fas fa-user me-1"></i> Member</span>
+        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">  <i class="fas fa-id-badge me-1"></i> ID: {{ userDetails?.id }}</span>
       </div>
     </div>
     <button class="btn btn-outline-light btn-sm rounded-3 fw-semibold" (click)="logout()" id="btn-logout">
-      🚪 Sign Out
+       <i class="fas fa-sign-out-alt me-1 text-danger"></i> Sign Out
     </button>
   </div>
 
@@ -78,7 +78,7 @@
         <div class="col-md-6">
           <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body p-4">
-              <h6 class="fw-bold mb-3 text-primary">👤 Account Details</h6>
+              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-user-circle me-2"></i> Account Details</h6>
               <table class="table table-borderless mb-0 small">
                 <tbody>
                   <tr>
@@ -108,7 +108,7 @@
         <div class="col-md-6">
           <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body p-4">
-              <h6 class="fw-bold mb-3 text-primary">📊 Quick Summary</h6>
+              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-chart-bar me-2"></i>  Quick Summary</h6>
               <table class="table table-borderless mb-0 small">
                 <tbody>
                   <tr>
@@ -132,7 +132,7 @@
         <div class="col-12" *ngIf="orders.length > 0">
           <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-4">
-              <h6 class="fw-bold mb-3 text-primary">🛍️ Recent Orders</h6>
+              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-shopping-bag me-2"></i>  Recent Orders</h6>
               <div *ngFor="let order of orders.slice(0,3)"
                    class="d-flex justify-content-between align-items-center py-2 border-bottom">
                 <div>
@@ -162,7 +162,7 @@
       </div>
 
       <div *ngIf="!loadingCart && cartItems.length === 0" class="text-center py-5">
-        <div style="font-size:4rem;">🛒</div>
+        <div style="font-size:4rem;"> <i class="fas fa-shopping-cart text-muted"></i></div>
         <h5 class="fw-bold mt-3">Your cart is empty</h5>
         <p class="text-muted">Browse our collection and add items you love.</p>
         <a routerLink="/shop" class="btn btn-primary rounded-3 px-4 fw-semibold">Shop Now</a>
@@ -207,7 +207,7 @@
       </div>
 
       <div *ngIf="!loadingOrders && orders.length === 0" class="text-center py-5">
-        <div style="font-size:4rem;">📦</div>
+        <div style="font-size:4rem;"> <i class="fas fa-box-open text-muted"></i></div>
         <h5 class="fw-bold mt-3">No orders yet</h5>
         <p class="text-muted">Start shopping and your orders will appear here.</p>
         <a routerLink="/shop" class="btn btn-primary rounded-3 px-4 fw-semibold">Shop Now</a>
@@ -229,7 +229,7 @@
                 Qty: <strong>{{ order.quantity }}</strong>
                 · {{ order.name }} · {{ order.phone }}
               </p>
-              <p class="text-muted small mb-0">📍 {{ order.address }}</p>
+              <p class="text-muted small mb-0"><i class="fas fa-map-marker-alt me-1"></i>  {{ order.address }}</p>
             </div>
             <div class="text-end">
               <div class="text-muted small">Total</div>

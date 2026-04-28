@@ -76,7 +76,9 @@ export class User implements OnInit {
       next: (data) => {
         this.orders = Array.isArray(data) ? data : data?.orders ?? [];
         this.loadingOrders = false;
+          this.cdr.detectChanges();
       },
+
       error: () => { this.loadingOrders = false; }
     });
   }

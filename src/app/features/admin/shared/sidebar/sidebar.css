@@ -1,0 +1,39 @@
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #111827;
+  color: white;
+  transition: 0.3s;
+  position: sticky;
+  top: 0;
+}
+
+.sidebar.collapsed {
+  width: 70px;
+}
+
+.logo {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.nav-link {
+  color: #cbd5e1;
+  padding: 12px 16px;
+  transition: 0.2s;
+  border-radius: 8px;
+  margin: 4px 8px;
+}
+
+.nav-link:hover {
+  background: #1f2937;
+  color: #fff;
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.btn-toggle {
+  color: white;
+}

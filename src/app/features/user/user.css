@@ -1,4 +1,4 @@
-/* Status badge colours – not available in Bootstrap by default */
+
 .status-pending   { background: #fef3c7 !important; color: #d97706 !important; }
 .status-shipped   { background: #dbeafe !important; color: #2563eb !important; }
 .status-delivered { background: #dcfce7 !important; color: #16a34a !important; }
@@ -9,4 +9,13 @@
   color: #6366f1;
   border-bottom: 2px solid #6366f1;
   font-weight: 700;
+}
+
+
+i {
+  transition: 0.2s;
+}
+
+i:hover {
+  transform: scale(1.1);
 }

@@ -1,0 +1,51 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+
+  <!-- Logo -->
+  <div class="logo d-flex align-items-center justify-content-between px-3 py-3">
+    <span *ngIf="!isCollapsed" class="fw-bold">Admin Panel</span>
+    <button class="btn btn-sm btn-toggle" (click)="toggleSidebar()">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Menu -->
+  <ul class="nav flex-column mt-3">
+
+    <li class="nav-item">
+      <a routerLink="/admin"
+         routerLinkActive="active"
+         class="nav-link d-flex align-items-center gap-2">
+        <i class="fas fa-home"></i>
+        <span *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/products"
+         routerLinkActive="active"
+         class="nav-link d-flex align-items-center gap-2">
+        <i class="fas fa-box"></i>
+        <span *ngIf="!isCollapsed">Products</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/orders"
+         routerLinkActive="active"
+         class="nav-link d-flex align-items-center gap-2">
+        <i class="fas fa-shopping-cart"></i>
+        <span *ngIf="!isCollapsed">Orders</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a routerLink="/admin/users"
+         routerLinkActive="active"
+         class="nav-link d-flex align-items-center gap-2">
+        <i class="fas fa-users"></i>
+        <span *ngIf="!isCollapsed">Users</span>
+      </a>
+    </li>
+
+  </ul>
+</div>
