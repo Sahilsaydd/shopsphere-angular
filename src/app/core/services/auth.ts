@@ -11,7 +11,17 @@ export class Auth {
 
   constructor(private http: HttpClient) {}
 
-  //  LOGIN
+
+
+
+
+
+getUserDetails() {
+  return this.http.get<any>('http://127.0.0.1:8000/auth/userdetails');
+}
+
+
+
   login(email: string, password: string) {
 
     const body = new URLSearchParams();
@@ -22,19 +32,16 @@ export class Auth {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).pipe(
       tap(res => {
-        //  store BOTH tokens
         localStorage.setItem('access_token', res.access_token);
         localStorage.setItem('refresh_token', res.refresh_token);
       })
     );
   }
 
-  //  REGISTER
   register(data: any) {
     return this.http.post(`${this.baseUrl}/register`, data);
   }
 
-  //  LOGOUT (REAL LOGOUT)
   logout() {
     const refresh = localStorage.getItem('refresh_token');
 
@@ -42,22 +49,19 @@ export class Auth {
       refresh_token: refresh
     }).pipe(
       tap(() => {
-        localStorage.clear(); //  remove all tokens
+        localStorage.clear();
       })
     );
   }
 
-  //  LOGIN CHECK
   isLoggedIn(): boolean {
     return !!localStorage.getItem('access_token');
   }
 
-  //  GET ACCESS TOKEN
   getToken() {
     return localStorage.getItem('access_token');
   }
 
-  //  SAFE ROLE EXTRACTION
   getUserRole(): string | null {
     try {
       const token = this.getToken();
@@ -66,7 +70,7 @@ export class Auth {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.role || null;
     } catch {
-      return null; //  prevent crash
+      return null;
     }
   }
 }

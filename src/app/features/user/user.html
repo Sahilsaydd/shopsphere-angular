@@ -1,28 +1,24 @@
 <div class="min-vh-100 bg-light pb-5">
 
-  <!-- ── Hero Banner ──────────────────────────────────────────────── -->
   <div class="text-white py-5 px-4 px-md-5 d-flex align-items-center gap-4 flex-wrap"
        style="background: linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);">
-    <!-- Avatar -->
     <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold fs-3"
          style="width:80px;height:80px;background:linear-gradient(135deg,#6366f1,#8b5cf6);box-shadow:0 0 0 4px rgba(255,255,255,0.15);">
       {{ userInitials }}
     </div>
-    <!-- Info -->
     <div class="flex-grow-1">
-      <h5 class="fw-bold mb-1">{{ userEmail }}</h5>
+      <h5 class="fw-bold mb-1">{{userDetails?.name }}</h5>
+      <h5 class="fw-bold mb-1">{{ userDetails?.email  }}</h5>
       <div class="d-flex gap-2 flex-wrap">
         <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">👤 Member</span>
-        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">🆔 ID: {{ userId }}</span>
+        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">🆔 ID: {{ userDetails?.id }}</span>
       </div>
     </div>
-    <!-- Logout -->
     <button class="btn btn-outline-light btn-sm rounded-3 fw-semibold" (click)="logout()" id="btn-logout">
       🚪 Sign Out
     </button>
   </div>
 
-  <!-- ── Stats Bar ─────────────────────────────────────────────────── -->
   <div class="bg-white border-bottom shadow-sm">
     <div class="container">
       <div class="row text-center py-3">
@@ -42,7 +38,6 @@
     </div>
   </div>
 
-  <!-- ── Tab Navigation ────────────────────────────────────────────── -->
   <div class="bg-white border-bottom sticky-top shadow-sm">
     <div class="container">
       <ul class="nav nav-tabs border-0">
@@ -75,14 +70,11 @@
     </div>
   </div>
 
-  <!-- ── Tab Content ────────────────────────────────────────────────── -->
   <div class="container py-4">
 
-    <!-- OVERVIEW TAB -->
     <div *ngIf="activeTab==='overview'">
       <div class="row g-4">
 
-        <!-- Account Details -->
         <div class="col-md-6">
           <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body p-4">
@@ -90,12 +82,16 @@
               <table class="table table-borderless mb-0 small">
                 <tbody>
                   <tr>
+                    <td class="text-muted ps-0">Name</td>
+                    <td class="fw-semibold text-end">{{ userDetails?.name }}</td>
+                  </tr>
+                  <tr>
                     <td class="text-muted ps-0">Email</td>
-                    <td class="fw-semibold text-end">{{ userEmail }}</td>
+                    <td class="fw-semibold text-end">{{ userDetails?.email }}</td>
                   </tr>
                   <tr>
                     <td class="text-muted ps-0">User ID</td>
-                    <td class="fw-semibold text-end">#{{ userId }}</td>
+                    <td class="fw-semibold text-end">#{{ userDetails?.id }}</td>
                   </tr>
                   <tr>
                     <td class="text-muted ps-0">Account Type</td>
@@ -109,7 +105,6 @@
           </div>
         </div>
 
-        <!-- Quick Summary -->
         <div class="col-md-6">
           <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body p-4">
@@ -134,7 +129,6 @@
           </div>
         </div>
 
-        <!-- Recent Orders Preview -->
         <div class="col-12" *ngIf="orders.length > 0">
           <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-4">
@@ -160,16 +154,13 @@
       </div>
     </div>
 
-    <!-- CART TAB -->
     <div *ngIf="activeTab==='cart'">
 
-      <!-- Loading -->
       <div *ngIf="loadingCart" class="text-center py-5">
         <div class="spinner-border text-primary" style="width:3rem;height:3rem;" role="status"></div>
         <p class="text-muted mt-3">Loading your cart…</p>
       </div>
 
-      <!-- Empty -->
       <div *ngIf="!loadingCart && cartItems.length === 0" class="text-center py-5">
         <div style="font-size:4rem;">🛒</div>
         <h5 class="fw-bold mt-3">Your cart is empty</h5>
@@ -177,7 +168,6 @@
         <a routerLink="/shop" class="btn btn-primary rounded-3 px-4 fw-semibold">Shop Now</a>
       </div>
 
-      <!-- Cart Grid -->
       <div *ngIf="!loadingCart && cartItems.length > 0">
         <div class="row g-3">
           <div class="col-sm-6 col-lg-4" *ngFor="let item of cartItems">
@@ -199,7 +189,6 @@
             </div>
           </div>
         </div>
-        <!-- Cart Total -->
         <div class="card border-0 shadow-sm rounded-4 mt-3">
           <div class="card-body p-3 d-flex justify-content-between align-items-center">
             <span class="fw-semibold text-muted">Cart Total</span>
@@ -210,16 +199,13 @@
 
     </div>
 
-    <!-- ORDERS TAB -->
     <div *ngIf="activeTab==='orders'">
 
-      <!-- Loading -->
       <div *ngIf="loadingOrders" class="text-center py-5">
         <div class="spinner-border text-primary" style="width:3rem;height:3rem;" role="status"></div>
         <p class="text-muted mt-3">Loading your orders…</p>
       </div>
 
-      <!-- Empty -->
       <div *ngIf="!loadingOrders && orders.length === 0" class="text-center py-5">
         <div style="font-size:4rem;">📦</div>
         <h5 class="fw-bold mt-3">No orders yet</h5>
@@ -227,10 +213,8 @@
         <a routerLink="/shop" class="btn btn-primary rounded-3 px-4 fw-semibold">Shop Now</a>
       </div>
 
-      <!-- Orders List -->
       <div *ngIf="!loadingOrders && orders.length > 0" class="d-flex flex-column gap-3">
         <div *ngFor="let order of orders" class="card border-0 shadow-sm rounded-4 overflow-hidden">
-          <!-- Order Header -->
           <div class="card-header bg-light border-0 d-flex justify-content-between align-items-center py-3 px-4">
             <div>
               <span class="fw-bold text-dark me-2">Order #{{ order.order_id }}</span>
@@ -238,7 +222,6 @@
             </div>
             <span class="badge rounded-pill" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span>
           </div>
-          <!-- Order Body -->
           <div class="card-body px-4 py-3 d-flex justify-content-between align-items-start flex-wrap gap-3">
             <div>
               <h6 class="fw-bold mb-1">{{ order.product_name ?? 'Order #' + order.order_id }}</h6>

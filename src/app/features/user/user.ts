@@ -4,7 +4,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Cart } from '../../core/services/cart';
 import { OrderService } from '../../core/services/order';
 import { Auth } from '../../core/services/auth';
-
+import { email } from '@angular/forms/signals';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -16,16 +17,12 @@ export class User implements OnInit {
 
   activeTab: 'overview' | 'cart' | 'orders' = 'overview';
 
-  // User info decoded from JWT
-  userEmail: string = '';
-  userId: number = 0;
-  userInitials: string = '';
+  userDetails: any = null;
 
-  // Data
+  userInitials: string = '';
   cartItems: any[] = [];
   orders: any[] = [];
 
-  // Loading states
   loadingCart = true;
   loadingOrders = true;
 
@@ -33,15 +30,17 @@ export class User implements OnInit {
     private cartService: Cart,
     private orderService: OrderService,
     private authService: Auth,
+
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr:ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    this.decodeUserFromToken();
+
     this.fetchCart();
     this.fetchOrders();
-    // Read ?tab=orders|cart|overview from query params (e.g. from order-success redirect)
+    this.fetchUserDetails()
     this.route.queryParams.subscribe(params => {
       const tab = params['tab'];
       if (tab === 'orders' || tab === 'cart' || tab === 'overview') {
@@ -50,29 +49,13 @@ export class User implements OnInit {
     });
   }
 
-  decodeUserFromToken() {
-    try {
-      const token = this.authService.getToken();
-      if (!token) return;
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      this.userId = payload.sub ?? 0;
-      this.userEmail = payload.email ?? '';
-      // Generate initials from email (e.g. sahil@gmail.com → SA)
-      const name = this.userEmail.split('@')[0];
-      this.userInitials = name.length >= 2
-        ? (name[0] + name[1]).toUpperCase()
-        : name[0]?.toUpperCase() ?? '?';
-    } catch {
-      this.userEmail = '';
-    }
-  }
+
 
   fetchCart() {
     this.loadingCart = true;
     this.cartService.getCart().subscribe({
       next: (res) => {
         const raw = res?.items ?? [];
-        // API nests product data under item.product — map it flat
         this.cartItems = raw.map((item: any) => ({
           productId: item.product?.id ?? null,
           name:      item.product?.name ?? 'Unknown Product',
@@ -91,13 +74,46 @@ export class User implements OnInit {
     this.loadingOrders = true;
     this.orderService.getOrders().subscribe({
       next: (data) => {
-        // Backend now returns enriched orders with product_name, total_price, name, phone, address
         this.orders = Array.isArray(data) ? data : data?.orders ?? [];
         this.loadingOrders = false;
       },
       error: () => { this.loadingOrders = false; }
     });
   }
+
+fetchUserDetails() {
+  this.authService.getUserDetails().subscribe({
+    next: (res) => {
+      console.log("User API:", res);
+
+      this.userDetails = res
+
+      if (res.name && res.name.trim().length > 0) {
+        const parts = res.name.trim().split(' ');
+
+        if (parts.length >= 2) {
+          this.userInitials =
+            (parts[0][0] + parts[1][0]).toUpperCase();
+        } else {
+          this.userInitials = parts[0][0].toUpperCase();
+        }
+
+      } else if (this.userDetails.email) {
+        const name = this.userDetails.email.split('@')[0];
+        this.userInitials =
+          name.length >= 2
+            ? (name[0] + name[1]).toUpperCase()
+            : name[0]?.toUpperCase() ?? '?';
+      }
+      this.cdr.detectChanges();
+    },
+
+    error: (err) => {
+      console.error("User API error:", err);
+    }
+  });
+}
+
 
   setTab(tab: 'overview' | 'cart' | 'orders') {
     this.activeTab = tab;
