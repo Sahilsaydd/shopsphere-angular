@@ -1,0 +1,89 @@
+<div class="success-wrapper">
+
+  <!-- Confetti layer -->
+  <div class="confetti-layer" aria-hidden="true">
+    <span *ngFor="let c of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+          class="confetti-piece"
+          [style.animation-delay]="(c * 0.15) + 's'"
+          [style.left]="(c * 5) + '%'"
+          [style.background-color]="colors[c % colors.length]">
+    </span>
+  </div>
+
+  <!-- Main card -->
+  <div class="success-card">
+
+    <!-- Top accent stripe -->
+    <div class="accent-stripe"></div>
+
+    <div class="success-body">
+
+      <!-- Animated checkmark -->
+      <div class="check-wrap">
+        <svg class="checkmark" viewBox="0 0 52 52">
+          <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+
+      <!-- Heading -->
+      <h1 class="success-title">Order Placed!</h1>
+      <p class="success-subtitle">
+        Your order is confirmed and is being processed. Thank you for shopping with us!
+      </p>
+
+      <!-- Order summary box -->
+      <div *ngIf="productName" class="order-summary">
+
+        <div class="summary-row">
+          <span class="summary-label">
+            <i class="fa-solid fa-box-open me-2"></i>Product
+          </span>
+          <span class="summary-value text-truncate" style="max-width: 200px;">{{ productName }}</span>
+        </div>
+
+        <div class="summary-row">
+          <span class="summary-label">
+            <i class="fa-solid fa-layer-group me-2"></i>Quantity
+          </span>
+          <span class="summary-value">{{ quantity }}</span>
+        </div>
+
+        <div class="summary-row last">
+          <span class="summary-label">
+            <i class="fa-solid fa-indian-rupee-sign me-2"></i>Total Paid
+          </span>
+          <span class="summary-total">₹ {{ totalPrice | number:'1.2-2' }}</span>
+        </div>
+
+      </div>
+
+      <!-- Action buttons -->
+      <div class="action-btns">
+        <button class="btn-primary-blue" (click)="goToOrders()" id="btn-view-orders">
+          <i class="fa-solid fa-bag-shopping me-2"></i>My Orders
+        </button>
+        <button class="btn-outline-blue" (click)="continueShopping()" id="btn-continue-shopping">
+          <i class="fa-solid fa-store me-2"></i>Continue Shopping
+        </button>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="trust-badges">
+        <span class="badge-item">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Secure Payment</span>
+        </span>
+        <span class="badge-item">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+          <span>Email Sent</span>
+        </span>
+        <span class="badge-item">
+          <i class="fa-solid fa-truck-fast"></i>
+          <span>Fast Delivery</span>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</div>

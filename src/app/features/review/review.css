@@ -1,0 +1,22 @@
+.detail-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.detail-box i {
+    font-size: 18px;
+    margin-top: 3px;
+}
+
+.place-order-btn {
+    transition: all 0.3s ease;
+}
+
+.place-order-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}

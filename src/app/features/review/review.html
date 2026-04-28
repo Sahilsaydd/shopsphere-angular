@@ -1,21 +1,136 @@
 <div class="container my-5" *ngIf="product">
 
-  <h3>Order Review</h3>
-  <div class="card p-3 mb-3">
-    <h5>{{ product.name }}</h5>
-    <p>Quantity: {{ quantity }}</p>
-    <h6>Total: ₹ {{ totalPrice }}</h6>
-  </div>
+  <div class="row g-4">
 
-  <div class="card p-3 mb-3">
-    <h5>User Details</h5>
-    <p><strong>Name:</strong> {{ userData.name }}</p>
-    <p><strong>Phone:</strong> {{ userData.phone }}</p>
-    <p><strong>Address:</strong> {{ userData.address }}</p>
-  </div>
+    <!-- LEFT: PRODUCT + USER -->
+    <div class="col-lg-8">
 
-  <button class="btn btn-success" (click)="placeOrder()">
-    Order Now
-  </button>
+      <!-- HEADER -->
+      <h3 class="fw-bold mb-4">
+        <i class="fa fa-check-circle text-success me-2"></i>
+        Review Your Order
+      </h3>
+
+      <!-- PRODUCT CARD -->
+      <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+
+        <div class="d-flex align-items-center gap-3">
+
+          <img [src]="product.product_img" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;">
+
+          <div class="flex-grow-1">
+            <h5 class="fw-semibold mb-1">{{ product.name }}</h5>
+            <p class="text-muted mb-1">
+              <i class="fa fa-box me-1"></i>
+              Quantity: <strong>{{ quantity }}</strong>
+            </p>
+            <p class="text-success fw-bold mb-0">
+              ₹ {{ totalPrice | number:'1.2-2' }}
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- DELIVERY DETAILS -->
+      <div class="card border-0 shadow-sm rounded-4 p-4">
+
+        <h5 class="fw-semibold mb-3">
+          <i class="fa fa-truck text-primary me-2"></i>
+          Delivery Details
+        </h5>
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <div class="detail-box">
+              <i class="fa fa-user text-secondary"></i>
+              <div>
+                <small>Name</small>
+                <div class="fw-semibold">{{ userData.name }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="detail-box">
+              <i class="fa fa-phone text-secondary"></i>
+              <div>
+                <small>Phone</small>
+                <div class="fw-semibold">{{ userData.phone }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="detail-box">
+              <i class="fa fa-map-marker-alt text-secondary"></i>
+              <div>
+                <small>Address</small>
+                <div class="fw-semibold">{{ userData.address }}</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- RIGHT: ORDER SUMMARY -->
+    <div class="col-lg-4">
+
+      <div class="card border-0 shadow-sm rounded-4 p-4 position-sticky top-0">
+
+        <h5 class="fw-semibold mb-3">
+          <i class="fa fa-receipt me-2"></i>
+          Order Summary
+        </h5>
+
+        <div class="d-flex justify-content-between mb-2">
+          <span>Price</span>
+          <span>₹ {{ product.final_price }}</span>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2">
+          <span>Quantity</span>
+          <span>{{ quantity }}</span>
+        </div>
+
+        <hr>
+
+        <div class="d-flex justify-content-between fw-bold mb-3">
+          <span>Total</span>
+          <span class="text-success">₹ {{ totalPrice | number:'1.2-2' }}</span>
+        </div>
+
+        <!-- PLACE ORDER BUTTON -->
+        <button class="btn btn-success w-100 rounded-4 py-3 fw-semibold place-order-btn" (click)="placeOrder()"
+          [disabled]="isLoading">
+
+          <span *ngIf="!isLoading">
+            <i class="fa fa-lock me-2"></i>
+            Place Order
+          </span>
+
+          <span *ngIf="isLoading" class="d-flex justify-content-center align-items-center gap-2">
+            <span class="spinner-border spinner-border-sm"></span>
+            Processing...
+          </span>
+
+        </button>
+
+        <p class="text-muted small mt-3 text-center mb-0">
+          <i class="fa fa-shield-alt me-1"></i>
+          Secure Checkout
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>

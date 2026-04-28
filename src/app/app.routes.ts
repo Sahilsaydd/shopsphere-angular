@@ -22,18 +22,28 @@ export const routes: Routes = [
         loadComponent:()=> import('./features/cart/cart').then((m)=>m.CartComponent),canActivate:[authGuard]
     },
     {
-      path:"order_products",
-      loadComponent:()=> import('./features/order/order').then((m)=>m.Order),canActivate:[authGuard]
+      path: 'order_products',
+      redirectTo: '/shop',
+      pathMatch: 'prefix'
     },
       {
     path: 'review',
     loadComponent: () =>
-      import('./features/review/review').then(m => m.ReviewComponent)
+      import('./features/review/review').then(m => m.ReviewComponent),
+    canActivate: [authGuard]
   },
+  {
+    path: 'order-success',
+    loadComponent: () =>
+      import('./features/order-success/order-success').then(m => m.OrderSuccessComponent),
+    canActivate: [authGuard]
+  },
+
 
     {
         path:"user",
-        loadComponent: ()=> import('./features/user/user').then((m)=>m.User)
+        loadComponent: ()=> import('./features/user/user').then((m)=>m.User),
+        canActivate: [authGuard]
     },
     {
         path:"wishlist",
