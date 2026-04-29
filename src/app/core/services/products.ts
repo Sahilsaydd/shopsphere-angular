@@ -32,4 +32,8 @@ export class Products {
   getProductById(id: number | string): Observable<Product>{
     return this.http.get<Product>(`${this.url}/${id}`);
   }
+
+  deleteProduct(id:number | string): Observable<void>{
+    return this.http.delete<void>(`${this.url}/${id}`);
+  }
 }

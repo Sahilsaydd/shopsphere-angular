@@ -27,7 +27,7 @@ onSearch(event: Event) {
 }
 
   logout() {
-  this.auth.logout().subscribe({
+  this.auth.logout('user').subscribe({
     next: () => {
       alert("Logged out successfully!");
       this.router.navigate(['/login']);

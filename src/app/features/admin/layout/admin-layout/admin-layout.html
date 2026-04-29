@@ -1,18 +1,15 @@
-<div class="d-flex">
+<div class="admin-layout">
 
-  <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
+  <app-sidebar class="sidebar"></app-sidebar>
 
-  <!-- Main Content -->
-  <div class="flex-grow-1">
+  <div class="main">
 
-    <!-- Navbar -->
-    <app-navbar></app-navbar>
+    <app-navbar class="navbar"></app-navbar>
 
-    <!-- Pages load here -->
-    <div class="p-4 bg-light min-vh-100">
+    <div class="content">
       <router-outlet></router-outlet>
     </div>
 
   </div>
+
 </div>

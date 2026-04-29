@@ -2,12 +2,17 @@ import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  const token = localStorage.getItem('access_token');
+  let token = null;
+  if(req.url.includes('/admin')){
+    token = localStorage.getItem('admin_access_token');
+  } else {
+    token = localStorage.getItem('user_access_token');
+  }
 
   console.log('🚀 API Called:', req.url);
   console.log('Token:', token);
 
-  // ❌ Skip auth APIs
+ 
   if (
     req.url.includes('/auth/login') ||
     req.url.includes('/auth/logout') ||

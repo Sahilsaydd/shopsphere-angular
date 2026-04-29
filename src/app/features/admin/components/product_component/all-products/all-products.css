@@ -1,0 +1,27 @@
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.thumb-img {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+table {
+  font-size: 13px;
+}
+
+thead th {
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+tbody tr:hover {
+  background: #f9fafb;
+  transition: 0.2s;
+}

@@ -10,6 +10,7 @@ export interface Product {
   stock: number;
   product_img: string;
   description: string;
+  brand: string; 
   product_images?: string[];
 
 }

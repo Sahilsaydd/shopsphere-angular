@@ -11,24 +11,80 @@
   <!-- Menu -->
   <ul class="nav flex-column mt-3">
 
+    <!-- Dashboard -->
     <li class="nav-item">
       <a routerLink="/admin"
          routerLinkActive="active"
+         [routerLinkActiveOptions]="{ exact: true }"
          class="nav-link d-flex align-items-center gap-2">
         <i class="fas fa-home"></i>
         <span *ngIf="!isCollapsed">Dashboard</span>
       </a>
     </li>
 
+    <!-- 🔥 Products (Bootstrap Collapse) -->
     <li class="nav-item">
-      <a routerLink="/admin/products"
+
+      <a class="nav-link d-flex justify-content-between align-items-center"
+         data-bs-toggle="collapse"
+         href="#productsMenu"
+         role="button"
          routerLinkActive="active"
-         class="nav-link d-flex align-items-center gap-2">
-        <i class="fas fa-box"></i>
-        <span *ngIf="!isCollapsed">Products</span>
+
+         aria-expanded="false">
+        <div class="d-flex align-items-center gap-2">
+          <i class="fas fa-box"></i>
+          <span *ngIf="!isCollapsed">Products</span>
+        </div>
+
+        <i *ngIf="!isCollapsed" class="fas fa-chevron-down small"></i>
       </a>
+
+      <!-- Submenu -->
+      <div class="collapse submenu" id="productsMenu">
+        <ul class="list-unstyled">
+
+          <li>
+            <a routerLink="/admin/product/all"
+               routerLinkActive="active"
+               class="nav-sublink">
+              <i class="fas fa-list"></i>
+              <span *ngIf="!isCollapsed">All Products</span>
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/admin/product/add"
+               routerLinkActive="active"
+               class="nav-sublink">
+              <i class="fas fa-plus"></i>
+              <span *ngIf="!isCollapsed">Add Product</span>
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/admin/product/update"
+               routerLinkActive="active"
+               class="nav-sublink">
+              <i class="fas fa-edit"></i>
+              <span *ngIf="!isCollapsed">Update Product</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/product/delete"
+               routerLinkActive="active"
+               class="nav-sublink">
+              <i class="fas fa-trash"></i>
+              <span *ngIf="!isCollapsed">Delete  Product</span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
     </li>
 
+    <!-- Orders -->
     <li class="nav-item">
       <a routerLink="/admin/orders"
          routerLinkActive="active"
@@ -38,6 +94,7 @@
       </a>
     </li>
 
+    <!-- Users -->
     <li class="nav-item">
       <a routerLink="/admin/users"
          routerLinkActive="active"
