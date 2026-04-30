@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { Home } from './features/home/home';
 import { authGuard } from './core/guards/auth-guard';
+import { adminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
     {path:"",loadComponent: ()=> import('./features/home/home').then((m)=>m.Home) ,  runGuardsAndResolvers: 'always' },
@@ -11,7 +12,8 @@ export const routes: Routes = [
     },
     {
         path:"shop",
-        loadComponent:()=> import('./features/shop/shop').then((m)=>m.Shop ),canActivate:[authGuard]
+        loadComponent:()=> import('./features/shop/shop').then((m)=>m.Shop ),canActivate:[authGuard],
+        data: { role: 'user' }
     },
     {
       path: "product/:id",
@@ -56,5 +58,7 @@ export const routes: Routes = [
     {
       path: 'admin',
       loadChildren: () => import('./features/admin/admin.routes').then(m => m.ADMIN_ROUTES)
+      ,canActivate: [adminGuard],
+      data: { role: 'admin' }
     }
 ];

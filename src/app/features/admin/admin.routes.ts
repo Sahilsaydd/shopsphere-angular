@@ -8,6 +8,7 @@ export const ADMIN_ROUTES: Routes = [
       import('./layout/admin-layout/admin-layout').then(m => m.AdminLayout),
 
     canActivate: [adminGuard], // 🔥 apply guard here
+    
 
     children: [
       {
@@ -39,7 +40,7 @@ export const ADMIN_ROUTES: Routes = [
       ,{
         path:'product/delete',
         loadComponent:()=>
-          import('./components/product_component/delete-product/delete-product').then(m=>m.DeleteProduct) 
+          import('./components/product_component/delete-product/delete-product').then(m=>m.DeleteProduct)
       }
     ]
   }

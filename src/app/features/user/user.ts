@@ -138,7 +138,7 @@ fetchUserDetails() {
   }
 
   logout() {
-    this.authService.logout().subscribe({
+    this.authService.logout('user').subscribe({
       next: () => this.router.navigate(['/login']),
       error: () => this.router.navigate(['/login'])
     });

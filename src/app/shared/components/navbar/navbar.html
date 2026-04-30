@@ -58,7 +58,7 @@
         <!-- <a routerLink="/login" routerLinkActive="active-icon">
           <i class="fa-regular fa-user"></i>
         </a> -->
-        <!-- If NOT logged in --> <a *ngIf="!auth.isLoggedIn()" routerLink="/login"  routerLinkActive="active-icon"> <i
+        <!-- If NOT logged in --> <a *ngIf="!auth.isLoggedIn('user')" routerLink="/login"  routerLinkActive="active-icon"> <i
             class="fa-regular fa-user"></i> </a>
             <!-- If logged in --> <a *ngIf="auth.isLoggedIn('user')" (click)="logout()"
           class="text-danger logout-link" routerLinkActive="active-icon"> <i class="fa-solid fa-right-from-bracket"></i> </a>

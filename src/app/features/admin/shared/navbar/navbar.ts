@@ -13,14 +13,9 @@ export class Navbar {
 
   constructor(public auth: Auth, private router: Router) {}
 
-  logout() {
-    this.auth.logout('admin').subscribe({
-      next: () => {
-        this.router.navigate(['/login']);
-      },
-      error: () => {
-        this.router.navigate(['/login']);
-      }
-    });
-  }
+logout() {
+  this.auth.logout('admin').subscribe(() => {
+    this.router.navigate(['/login']);
+  });
+}
 }

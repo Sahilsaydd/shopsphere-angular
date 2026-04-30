@@ -3,16 +3,14 @@ import { inject, Inject } from "@angular/core";
 import { Auth } from "../services/auth";
 
 
-export const adminGuard: CanActivateFn = ()=>{
+export const adminGuard: CanActivateFn = () => {
+  const auth = inject(Auth);
+  const router = inject(Router);
 
-    const auth = inject(Auth);
-    const router = inject(Router);
+  if (!auth.isLoggedIn('admin')) {
+    router.navigate(['/login']);
+    return false;
+  }
 
-    const role  = auth.getUserRole();
-
-    if(role === "admin"){
-        return true
-    }
-    router.navigate(['/login'])
-    return false
-}
+  return true;
+};

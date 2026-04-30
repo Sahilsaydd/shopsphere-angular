@@ -2,17 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  let token = null;
-  if(req.url.includes('/admin')){
-    token = localStorage.getItem('admin_access_token');
-  } else {
-    token = localStorage.getItem('user_access_token');
-  }
-
-  console.log('🚀 API Called:', req.url);
-  console.log('Token:', token);
-
- 
+  // 🚫 1. Skip auth APIs (VERY IMPORTANT)
   if (
     req.url.includes('/auth/login') ||
     req.url.includes('/auth/logout') ||
@@ -21,7 +11,21 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
-  // ✅ Attach token
+  let token = null;
+
+  // 🔥 2. Detect admin APIs
+  const isAdminApi =
+    req.url.includes('/products') ||
+    req.url.includes('/orders') ||
+    req.url.includes('/users');
+
+  if (isAdminApi) {
+    token = localStorage.getItem('admin_access_token');
+  } else {
+    token = sessionStorage.getItem('user_access_token');
+  }
+
+  // 🔐 3. Attach token
   if (token) {
     const modifiedReq = req.clone({
       setHeaders: {
@@ -29,7 +33,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     });
 
-    console.log('Modified Headers:', modifiedReq.headers);
+    console.log('📡 API:', req.url);
+    console.log('🔐 Token used:', isAdminApi ? 'ADMIN' : 'USER');
+
     return next(modifiedReq);
   }
 

@@ -26,15 +26,9 @@ onSearch(event: Event) {
   }
 }
 
-  logout() {
-  this.auth.logout('user').subscribe({
-    next: () => {
-      alert("Logged out successfully!");
-      this.router.navigate(['/login']);
-    },
-    error: () => {
-      alert("Logout failed. Please try again.");
-    }
+ logout() {
+  this.auth.logout('user').subscribe(() => {
+    this.router.navigate(['/login']);
   });
 }
 
