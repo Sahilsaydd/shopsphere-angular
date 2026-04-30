@@ -2,7 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  // 🚫 Skip auth APIs
+
   if (
     req.url.includes('/auth/login') ||
     req.url.includes('/auth/logout') ||
@@ -16,10 +16,9 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   let token = null;
 
-  // 🔥 ONLY treat ADMIN actions as admin
+
   const isAdminApi =
-    (req.url.includes('/products') && req.method !== 'GET') || // create/update/delete
-    req.url.includes('/admin');
+    (req.url.includes('/products') && req.method !== 'GET') || req.url.includes('/admin');
 
   if (isAdminApi) {
     token = adminToken;
@@ -27,7 +26,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     token = userToken;
   }
 
-  // 🔐 Attach token
   if (token) {
     const modifiedReq = req.clone({
       setHeaders: {

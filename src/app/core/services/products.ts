@@ -18,6 +18,9 @@ export class Products {
     return this.http.get<Product[]>(this.url);
   }
 
+getProductsPaginated(page:number, perPage:number){
+  return this.http.get<any>(`${this.url}/paginated?page=${page}&per_page=${perPage}`);
+}
 
   searchProducts(keyword: string, category?: string): Observable<Product[]> {
     let url = `${this.url}/search/?keyword=${keyword}`;

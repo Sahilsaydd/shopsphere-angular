@@ -1,25 +1,51 @@
 <div class="container-fluid px-4 py-4">
 
-  <div class="card shadow-sm border-0 rounded-4">
+  <!-- 🔍 Top Bar -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h4 class="fw-bold text-dark mb-0">
+      <i class="fas fa-box-open me-2 text-primary"></i>
+      Product Management
+    </h4>
+
+    <div class="search-box d-flex align-items-center">
+      <i class="fas fa-search search-icon"></i>
+
+      <input
+        type="text"
+        placeholder="Search products..."
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="onSearch()"
+      />
+
+      <button class="btn btn-primary ms-2" (click)="onSearch()">
+        Search
+      </button>
+
+      <button class="btn btn-light ms-2 border" (click)="loadProducts()">
+        Reset
+      </button>
+    </div>
+
+  </div>
+
+  <!-- 📦 Table Card -->
+  <div class="card custom-card">
+
     <div class="table-responsive">
 
-      <table class="table align-middle mb-0">
+      <table class="table custom-table align-middle mb-0">
 
-        <thead class="table-light">
+        <thead>
           <tr>
-            <th>SR.No</th>
-            <th>Image</th>
-            <th>Name</th>
+            <th>#</th>
+            <th>Product</th>
             <th>Brand</th>
             <th>Category</th>
             <th>Price</th>
             <th>Final</th>
-            <th>Saved</th>
-            <th>Discount</th>
-            <th>Rating</th>
             <th>Stock</th>
-            <th>Gallery</th>
-            <th>Description</th>
+            <th>Rating</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -28,24 +54,23 @@
 
           <tr *ngFor="let product of products; let i = index">
 
-            <td>{{ i + 1 }}</td>
+            <td>{{ (currentPage - 1) * perPage + i + 1 }}</td>
 
-            <td>
-              <img [src]="product.product_img" class="product-img" alt="" />
+            <!-- Product -->
+            <td class="d-flex align-items-center gap-2">
+              <img [src]="product.product_img" class="product-img" />
+              <div>
+                <div class="fw-semibold">{{ product.name }}</div>
+                <small class="text-muted">{{ product.description }}</small>
+              </div>
             </td>
 
-            <td class="fw-semibold">
-              {{ product.name }}
-            </td>
+            <td>{{ product.brand }}</td>
 
             <td>
-              <i class="fas fa-industry me-1 text-secondary"></i>
-              {{ product.brand }}
-            </td>
-
-            <td>
-              <i class="fas fa-tag me-1 text-primary"></i>
-              {{ product.category }}
+              <span class="badge bg-light text-dark border">
+                {{ product.category }}
+              </span>
             </td>
 
             <td class="text-muted text-decoration-line-through">
@@ -56,19 +81,6 @@
               ₹ {{ product.final_price }}
             </td>
 
-            <td class="text-success">
-              ₹ {{ product.you_saved }}
-            </td>
-
-            <td class="text-success fw-semibold">
-              {{ product.discount_percentage }}%
-            </td>
-
-            <td>
-              <i class="fas fa-star text-warning"></i>
-              {{ product.rating }}
-            </td>
-
             <td>
               <span class="badge"
                 [ngClass]="product.stock > 0 ? 'bg-success' : 'bg-danger'">
@@ -77,30 +89,19 @@
             </td>
 
             <td>
-              <div class="d-flex gap-1 flex-wrap">
-                <img  *ngFor="let img of product.product_images"
-                     [src]="img"
-                     class="thumb-img" alt="">
-              </div>
+              <i class="fas fa-star text-warning me-1"></i>
+              {{ product.rating }}
             </td>
 
-            <td>
-              <small class="text-muted text-truncate d-block"
-                     style="max-width:200px;">
-                {{ product.description }}
-              </small>
-            </td>
-
+            <!-- Actions -->
             <td>
               <div class="d-flex gap-2">
 
-                <button  class="btn btn-sm btn-outline-primary"
-                        (click)="editProduct(product.id)">
+                <button class="btn btn-sm btn-outline-primary" (click)="editProduct(product.id)">
                   <i class="fas fa-edit"></i>
                 </button>
 
-                <button class="btn btn-sm btn-outline-danger"
-                        (click)="deleteProduct(product.id)">
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product.id)">
                   <i class="fas fa-trash"></i>
                 </button>
 
@@ -114,6 +115,28 @@
       </table>
 
     </div>
+  </div>
+
+  <!-- 📄 Pagination -->
+  <div *ngIf="!isSearching"
+       class="pagination-container mt-4">
+
+    <button class="page-btn"
+            (click)="prevPage()"
+            [disabled]="currentPage === 1">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <span class="page-info">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+
+    <button class="page-btn"
+            (click)="nextPage()"
+            [disabled]="currentPage === totalPages">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
   </div>
 
 </div>
