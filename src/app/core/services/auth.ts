@@ -21,33 +21,45 @@ getUserDetails() {
 }
 
 
+login(email: string, password: string) {
 
-  login(email: string, password: string) {
+  const body = new URLSearchParams();
+  body.set('username', email);
+  body.set('password', password);
 
-    const body = new URLSearchParams();
-    body.set('username', email);
-    body.set('password', password);
+  return this.http.post<any>(`${this.baseUrl}/login`, body.toString(), {
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+  }).pipe(
+    tap(res => {
+      const payload = JSON.parse(atob(res.access_token.split('.')[1]));
+      const role = payload.role;
 
-    return this.http.post<any>(`${this.baseUrl}/login`, body.toString(), {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    }).pipe(
-      tap(res => {
-        const payload = JSON.parse(atob(res.access_token.split('.')[1]));
-        console.log('User Role:', payload.role);
-        const role = payload.role;
-        if( role === 'admin') {
-          localStorage.setItem('admin_access_token', res.access_token);
-          localStorage.setItem('admin_refresh_token', res.refresh_token);
-        }else{
-           sessionStorage.setItem('user_access_token', res.access_token);
-          sessionStorage.setItem('user_refresh_token', res.refresh_token);
-        }
+      console.log('User Role:', role);
 
-      })
-    );
-  }
+      if (role === 'admin') {
 
+        // ✅ store admin
+        localStorage.setItem('admin_access_token', res.access_token);
+        localStorage.setItem('admin_refresh_token', res.refresh_token);
 
+        // 🔥 FIX: remove user session
+        sessionStorage.removeItem('user_access_token');
+        sessionStorage.removeItem('user_refresh_token');
+
+      } else {
+
+        // ✅ store user
+        sessionStorage.setItem('user_access_token', res.access_token);
+        sessionStorage.setItem('user_refresh_token', res.refresh_token);
+
+        // 🔥 FIX: remove admin session
+        localStorage.removeItem('admin_access_token');
+        localStorage.removeItem('admin_refresh_token');
+      }
+
+    })
+  );
+}
 
   register(data: any) {
     return this.http.post(`${this.baseUrl}/register`, data);

@@ -2,7 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
-  // 🚫 1. Skip auth APIs (VERY IMPORTANT)
+  // 🚫 Skip auth APIs
   if (
     req.url.includes('/auth/login') ||
     req.url.includes('/auth/logout') ||
@@ -11,21 +11,23 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req);
   }
 
+  const adminToken = localStorage.getItem('admin_access_token');
+  const userToken = sessionStorage.getItem('user_access_token');
+
   let token = null;
 
-  // 🔥 2. Detect admin APIs
+  // 🔥 ONLY treat ADMIN actions as admin
   const isAdminApi =
-    req.url.includes('/products') ||
-    req.url.includes('/orders') ||
-    req.url.includes('/users');
+    (req.url.includes('/products') && req.method !== 'GET') || // create/update/delete
+    req.url.includes('/admin');
 
   if (isAdminApi) {
-    token = localStorage.getItem('admin_access_token');
+    token = adminToken;
   } else {
-    token = sessionStorage.getItem('user_access_token');
+    token = userToken;
   }
 
-  // 🔐 3. Attach token
+  // 🔐 Attach token
   if (token) {
     const modifiedReq = req.clone({
       setHeaders: {
