@@ -39,4 +39,15 @@ getProductsPaginated(page:number, perPage:number){
   deleteProduct(id:number | string): Observable<void>{
     return this.http.delete<void>(`${this.url}/${id}`);
   }
+
+  createProduct(formData: FormData) {
+  return this.http.post<Product>(this.url, formData);
+}
+
+
+updateProduct(id:number , formData: FormData): Observable<Product>{
+  return this.http.put<Product>(`${this.url}/${id}`, formData); 
+
+
+}
 }

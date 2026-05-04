@@ -1,5 +1,4 @@
 <div class="min-vh-100 bg-light pb-5">
-
   <div class="text-white py-5 px-4 px-md-5 d-flex align-items-center gap-4 flex-wrap"
        style="background: linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);">
     <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 fw-bold fs-3"
@@ -7,15 +6,15 @@
       {{ userInitials }}
     </div>
     <div class="flex-grow-1">
-      <h5 class="fw-bold mb-1">{{userDetails?.name }}</h5>
-      <h5 class="fw-bold mb-1">{{ userDetails?.email  }}</h5>
+      <h5 class="fw-bold mb-1">{{ userDetails?.name }}</h5>
+      <h5 class="fw-bold mb-1">{{ userDetails?.email }}</h5>
       <div class="d-flex gap-2 flex-wrap">
         <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);"><i class="fas fa-user me-1"></i> Member</span>
-        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);">  <i class="fas fa-id-badge me-1"></i> ID: {{ userDetails?.id }}</span>
+        <span class="badge rounded-pill" style="background:rgba(255,255,255,0.15);"><i class="fas fa-id-badge me-1"></i> ID: {{ userDetails?.id }}</span>
       </div>
     </div>
     <button class="btn btn-outline-light btn-sm rounded-3 fw-semibold" (click)="logout()" id="btn-logout">
-       <i class="fas fa-sign-out-alt me-1 text-danger"></i> Sign Out
+      <i class="fas fa-sign-out-alt me-1 text-danger"></i> Sign Out
     </button>
   </div>
 
@@ -31,7 +30,7 @@
           <div class="text-muted small text-uppercase" style="letter-spacing:.05em;">In Cart</div>
         </div>
         <div class="col">
-          <div class="fw-bold fs-5 text-dark">₹ {{ cartTotal | number:'1.2-2' }}</div>
+          <div class="fw-bold fs-5 text-dark">Rs. {{ cartTotal | number:'1.2-2' }}</div>
           <div class="text-muted small text-uppercase" style="letter-spacing:.05em;">Cart Value</div>
         </div>
       </div>
@@ -71,10 +70,8 @@
   </div>
 
   <div class="container py-4">
-
     <div *ngIf="activeTab==='overview'">
       <div class="row g-4">
-
         <div class="col-md-6">
           <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body p-4">
@@ -108,7 +105,7 @@
         <div class="col-md-6">
           <div class="card border-0 shadow-sm rounded-4 h-100">
             <div class="card-body p-4">
-              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-chart-bar me-2"></i>  Quick Summary</h6>
+              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-chart-bar me-2"></i> Quick Summary</h6>
               <table class="table table-borderless mb-0 small">
                 <tbody>
                   <tr>
@@ -121,7 +118,7 @@
                   </tr>
                   <tr>
                     <td class="text-muted ps-0">Cart Total</td>
-                    <td class="fw-bold text-success text-end">₹ {{ cartTotal | number:'1.2-2' }}</td>
+                    <td class="fw-bold text-success text-end">Rs. {{ cartTotal | number:'1.2-2' }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -132,7 +129,7 @@
         <div class="col-12" *ngIf="orders.length > 0">
           <div class="card border-0 shadow-sm rounded-4">
             <div class="card-body p-4">
-              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-shopping-bag me-2"></i>  Recent Orders</h6>
+              <h6 class="fw-bold mb-3 text-primary"><i class="fas fa-shopping-bag me-2"></i> Recent Orders</h6>
               <div *ngFor="let order of orders.slice(0,3)"
                    class="d-flex justify-content-between align-items-center py-2 border-bottom">
                 <div>
@@ -140,29 +137,27 @@
                   <div class="text-muted" style="font-size:.78rem;">{{ order.created_at | date:'mediumDate' }}</div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                  <span class="fw-bold small">₹ {{ (order.total_price ?? order.price) | number:'1.2-2' }}</span>
+                  <span class="fw-bold small">Rs. {{ (order.total_price ?? order.price) | number:'1.2-2' }}</span>
                   <span class="badge rounded-pill" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span>
                 </div>
               </div>
               <button class="btn btn-link btn-sm p-0 mt-2 text-primary fw-semibold" (click)="setTab('orders')">
-                View All Orders →
+                View All Orders
               </button>
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
     <div *ngIf="activeTab==='cart'">
-
       <div *ngIf="loadingCart" class="text-center py-5">
         <div class="spinner-border text-primary" style="width:3rem;height:3rem;" role="status"></div>
-        <p class="text-muted mt-3">Loading your cart…</p>
+        <p class="text-muted mt-3">Loading your cart...</p>
       </div>
 
       <div *ngIf="!loadingCart && cartItems.length === 0" class="text-center py-5">
-        <div style="font-size:4rem;"> <i class="fas fa-shopping-cart text-muted"></i></div>
+        <div style="font-size:4rem;"><i class="fas fa-shopping-cart text-muted"></i></div>
         <h5 class="fw-bold mt-3">Your cart is empty</h5>
         <p class="text-muted">Browse our collection and add items you love.</p>
         <a routerLink="/shop" class="btn btn-primary rounded-3 px-4 fw-semibold">Shop Now</a>
@@ -176,14 +171,14 @@
                  (click)="goToProduct(item.product_id ?? item.productId)"
                  onmouseenter="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'"
                  onmouseleave="this.style.transform='';this.style.boxShadow=''">
-              <img [src]="item.image" [alt]="item.name"
+              <img [src]="resolveImage(item.image || item.product_img)" [alt]="item.name"
                    class="card-img-top" style="height:160px; object-fit:cover;" />
               <div class="card-body p-3">
                 <p class="text-primary fw-semibold mb-1" style="font-size:.72rem; text-transform:uppercase; letter-spacing:.05em;">{{ item.category }}</p>
                 <h6 class="fw-bold mb-2 text-truncate">{{ item.name }}</h6>
                 <div class="d-flex justify-content-between align-items-center">
                   <span class="text-muted small">Qty: {{ item.quantity }}</span>
-                  <span class="fw-bold">₹ {{ (item.price * item.quantity) | number:'1.2-2' }}</span>
+                  <span class="fw-bold">Rs. {{ (item.price * item.quantity) | number:'1.2-2' }}</span>
                 </div>
               </div>
             </div>
@@ -192,22 +187,20 @@
         <div class="card border-0 shadow-sm rounded-4 mt-3">
           <div class="card-body p-3 d-flex justify-content-between align-items-center">
             <span class="fw-semibold text-muted">Cart Total</span>
-            <span class="fw-bold fs-5">₹ {{ cartTotal | number:'1.2-2' }}</span>
+            <span class="fw-bold fs-5">Rs. {{ cartTotal | number:'1.2-2' }}</span>
           </div>
         </div>
       </div>
-
     </div>
 
     <div *ngIf="activeTab==='orders'">
-
       <div *ngIf="loadingOrders" class="text-center py-5">
         <div class="spinner-border text-primary" style="width:3rem;height:3rem;" role="status"></div>
-        <p class="text-muted mt-3">Loading your orders…</p>
+        <p class="text-muted mt-3">Loading your orders...</p>
       </div>
 
       <div *ngIf="!loadingOrders && orders.length === 0" class="text-center py-5">
-        <div style="font-size:4rem;"> <i class="fas fa-box-open text-muted"></i></div>
+        <div style="font-size:4rem;"><i class="fas fa-box-open text-muted"></i></div>
         <h5 class="fw-bold mt-3">No orders yet</h5>
         <p class="text-muted">Start shopping and your orders will appear here.</p>
         <a routerLink="/shop" class="btn btn-primary rounded-3 px-4 fw-semibold">Shop Now</a>
@@ -227,19 +220,17 @@
               <h6 class="fw-bold mb-1">{{ order.product_name ?? 'Order #' + order.order_id }}</h6>
               <p class="text-muted small mb-1">
                 Qty: <strong>{{ order.quantity }}</strong>
-                · {{ order.name }} · {{ order.phone }}
+                | {{ order.name }} | {{ order.phone }}
               </p>
-              <p class="text-muted small mb-0"><i class="fas fa-map-marker-alt me-1"></i>  {{ order.address }}</p>
+              <p class="text-muted small mb-0"><i class="fas fa-map-marker-alt me-1"></i> {{ order.address }}</p>
             </div>
             <div class="text-end">
               <div class="text-muted small">Total</div>
-              <div class="fw-bold fs-5">₹ {{ (order.total_price ?? order.price) | number:'1.2-2' }}</div>
+              <div class="fw-bold fs-5">Rs. {{ (order.total_price ?? order.price) | number:'1.2-2' }}</div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
 </div>

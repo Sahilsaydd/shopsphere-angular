@@ -38,21 +38,17 @@ login(email: string, password: string) {
 
       if (role === 'admin') {
 
-        // ✅ store admin
         localStorage.setItem('admin_access_token', res.access_token);
         localStorage.setItem('admin_refresh_token', res.refresh_token);
 
-        // 🔥 FIX: remove user session
         sessionStorage.removeItem('user_access_token');
         sessionStorage.removeItem('user_refresh_token');
 
       } else {
 
-        // ✅ store user
         sessionStorage.setItem('user_access_token', res.access_token);
         sessionStorage.setItem('user_refresh_token', res.refresh_token);
 
-        // 🔥 FIX: remove admin session
         localStorage.removeItem('admin_access_token');
         localStorage.removeItem('admin_refresh_token');
       }

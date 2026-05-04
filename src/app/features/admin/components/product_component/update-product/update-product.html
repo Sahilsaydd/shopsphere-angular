@@ -1,2 +1,162 @@
-<p>update-product works!</p>
-<h1><b>This is the delete component</b></h1>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+
+          <!-- Header -->
+          <h4 class="fw-bold text-center mb-4">
+            <i class="fas fa-edit text-primary me-2"></i>
+            Update Product
+          </h4>
+
+          <form (ngSubmit)="update()" #updateForm="ngForm">
+
+            <!-- Name -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-tag text-primary me-1"></i> Product Name
+              </label>
+              <input type="text" class="form-control"
+                     name="name"
+                     [(ngModel)]="product.name"
+                     required>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-align-left text-primary me-1"></i> Description
+              </label>
+              <textarea class="form-control"
+                        rows="3"
+                        name="description"
+                        [(ngModel)]="product.description"
+                        required></textarea>
+            </div>
+
+            <!-- Price + Category -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-rupee-sign text-success me-1"></i> Price
+                </label>
+                <input type="number" class="form-control"
+                       name="price"
+                       [(ngModel)]="product.price"
+                       required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-layer-group text-info me-1"></i> Category
+                </label>
+                <input type="text" class="form-control"
+                       name="category"
+                       [(ngModel)]="product.category"
+                       required>
+              </div>
+            </div>
+
+            <!-- Stock + Brand -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-boxes text-warning me-1"></i> Stock
+                </label>
+                <input type="number" class="form-control"
+                       name="stock"
+                       [(ngModel)]="product.stock"
+                       required>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-industry text-secondary me-1"></i> Brand
+                </label>
+                <input type="text" class="form-control"
+                       name="brand"
+                       [(ngModel)]="product.brand">
+              </div>
+            </div>
+
+            <!-- Rating + Discount -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-star text-warning me-1"></i> Rating
+                </label>
+                <input type="number" class="form-control"
+                       name="rating"
+                       [(ngModel)]="product.rating"
+                       min="0" max="5" step="0.1">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-semibold">
+                  <i class="fas fa-percent text-danger me-1"></i> Discount (%)
+                </label>
+                <input type="number" class="form-control"
+                       name="discount_percentage"
+                       [(ngModel)]="product.discount_percentage">
+              </div>
+            </div>
+
+            <!-- Existing Image Preview -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-image text-primary me-1"></i> Current Image
+              </label>
+              <div *ngIf="product.product_img">
+                <img [src]="resolveImage(product.product_img)"
+                     class="img-thumbnail mb-2"
+                     alt="Current product image"
+                     style="max-height: 120px;">
+              </div>
+            </div>
+
+            <!-- Upload New Main Image -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-upload text-primary me-1"></i> Replace Main Image
+              </label>
+              <input type="file" class="form-control"
+                     (change)="onFileSelect($event)">
+            </div>
+
+            <!-- Multiple Images -->
+            <div class="mb-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-images text-primary me-1"></i> Add More Images
+              </label>
+              <input type="file" class="form-control"
+                     multiple
+                     (change)="onMultipleSelect($event)">
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex gap-3 mt-4">
+              <button type="submit"
+                      class="btn btn-success w-100"
+                      [disabled]="updateForm.invalid">
+                <i class="fas fa-save me-2"></i>
+                Update Product
+              </button>
+
+              <button type="button"
+                      class="btn btn-outline-secondary w-100"
+                      (click)="goBack()">
+                <i class="fas fa-times me-2"></i>
+                Cancel
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

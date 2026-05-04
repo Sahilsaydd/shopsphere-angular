@@ -1,0 +1,12 @@
+.card {
+  background: #ffffff;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.25);
+}
+
+button:hover {
+  transform: translateY(-1px);
+  transition: 0.2s ease;
+}

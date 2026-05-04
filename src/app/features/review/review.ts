@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderService } from '../../core/services/order';
-import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { OrderService } from '../../core/services/order';
 
 @Component({
   selector: 'app-review',
@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./review.css']
 })
 export class ReviewComponent implements OnInit {
+  imageBaseUrl = 'http://127.0.0.1:8000';
 
   product: any;
   quantity: number = 1;
@@ -46,8 +47,17 @@ export class ReviewComponent implements OnInit {
     return (this.product?.final_price ?? 0) * this.quantity;
   }
 
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
+  }
+
   async placeOrder() {
-    // ── Validation with SweetAlert ─────────────────────────────
     if (!this.userData.name || this.userData.name.length < 2) {
       await Swal.fire({
         icon: 'warning',
@@ -65,7 +75,7 @@ export class ReviewComponent implements OnInit {
       await Swal.fire({
         icon: 'warning',
         title: 'Invalid Phone',
-        text: 'Please enter a valid phone number (10–15 digits).',
+        text: 'Please enter a valid phone number (10-15 digits).',
         confirmButtonColor: '#6366f1',
         background: '#1e1b4b',
         color: '#fff',
@@ -87,10 +97,9 @@ export class ReviewComponent implements OnInit {
       return;
     }
 
-    // ── Show loader ────────────────────────────────────────────
     this.isLoading = true;
     Swal.fire({
-      title: 'Placing your order…',
+      title: 'Placing your order...',
       html: '<p style="color:rgba(255,255,255,0.7);margin:0">Please wait a moment</p>',
       allowOutsideClick: false,
       allowEscapeKey: false,
@@ -106,7 +115,6 @@ export class ReviewComponent implements OnInit {
         next: (res) => {
           this.isLoading = false;
           Swal.close();
-          // Navigate to success page with order details in state
           this.router.navigate(['/order-success'], {
             state: {
               orderId: res?.order_id ?? res?.id ?? '',

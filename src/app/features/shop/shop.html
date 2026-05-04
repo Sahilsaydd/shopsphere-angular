@@ -1,6 +1,4 @@
-<div class="container-fluid  my-5">
-
-
+<div class="container-fluid my-5">
   <div class="mb-4">
     <h2 class="fw-bold">Curated Collections</h2>
     <p *ngIf="searchKeyword" class="text-muted mb-0">
@@ -9,212 +7,207 @@
   </div>
 
   <div class="row">
+    <div class="col-md-3">
+      <div class="card shadow-sm p-4 mb-4">
+        <h6 class="fw-bold mb-3">Categories</h6>
 
-
-<!-- ================= LEFT SIDEBAR ================= -->
-<div class="col-md-3 ">
-
-  <div class="card shadow-sm p-4 mb-4">
-    <h6 class="fw-bold mb-3">Categories</h6>
-
-    <div class="list-group">
-      <button
-        *ngFor="let cat of categories"
-        class="list-group-item list-group-item-action"
-        [class.active]="selectedCategory === cat"
-        (click)="filterByCategory(cat)"
-      >
-        {{ cat }}
-      </button>
-    </div>
-  </div>
-
-  <div class="card shadow-sm p-3 py-5">
-    <h6 class="fw-bold mb-3">Price Range</h6>
-    <label for="priceFilter" class="visually-hidden">Price range</label>
-
-    <input
-      id="priceFilter"
-      type="range"
-      class="form-range"
-      [min]="minPrice"
-      [max]="maxPrice"
-      [(ngModel)]="selectedPrice"
-      (input)="filterByPrice()"
-    />
-
-    <div class="d-flex justify-content-between">
-      <small>₹ {{ minPrice }}</small>
-      <small class="fw-bold">₹ {{ selectedPrice }}</small>
-    </div>
-  </div>
-
-</div>
-
-<!-- ================= RIGHT PRODUCTS ================= -->
-<div class="col-md-8">
-
-<div *ngIf="loading$ | async" class="text-center mt-5">
-  <div class="spinner-border text-primary"></div>
-  <p class="mt-2 text-muted">Loading products...</p>
-</div>
-
-<div *ngIf="!(loading$ | async) && (filteredProducts$ | async)?.length === 0"
-     class="text-center mt-5">
-    <img src="assets/images/no-data.png" width="180" class="mb-3" alt="No products found" />
-    <h4>No results found</h4>
-    <p class="text-muted">
-      Try searching with different keywords
-    </p>
-    <button class="btn btn-primary" (click)="router.navigate(['/shop'])">
-      View All Products
-    </button>
-  </div>
-
-  <div class="row py-3"
-     *ngIf="!(loading$ | async) && (filteredProducts$ | async)?.length! > 0">
-  <div class="col-lg-4 col-md-12 mb-4" *ngFor="let product of paginatedProduct$ | async">
-
-  <div class="card h-100 shadow-sm border-0 product-card"
-       (click)="goToProduct(product.id)" style="cursor: pointer;">
-
-    <div class="position-relative">
-      <img
-        [src]="product.product_img"
-        alt="{{ product.name }}"
-        class="card-img-top p-3 product-image"
-      />
-
-      <span
-        *ngIf="product.discount_percentage > 0"
-        class="badge bg-danger position-absolute top-0 start-0 m-2"
-      >
-        {{ product.discount_percentage }}% OFF
-      </span>
-    </div>
-
-    <div class="card-body d-flex flex-column">
-
-      <span class="text-muted small mb-1">
-        {{ product.category }}
-      </span>
-
-      <h6 class="fw-bold mb-1">
-        {{ product.name }}
-      </h6>
-
-      <div class="mb-2">
-        <span class="text-warning">
-          <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
-          <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
-        </span>
-        <small class="text-muted ms-1">{{ product.rating }}</small>
-      </div>
-
-      <p class="text-muted small flex-grow-1">
-        {{ product.description | slice:0:80 }}...
-      </p>
-
-      <div class="mt-auto">
-
-        <span class="fw-bold text-dark fs-5">
-          ₹ {{ product.final_price }}
-        </span>
-
-        <span class="text-muted text-decoration-line-through ms-2">
-          ₹ {{ product.price }}
-        </span>
-
-        <span class="text-success fw-bold ms-2">
-          {{ product.discount_percentage }}% OFF
-        </span>
-
-        <div class="text-success small">
-          You saved ₹ {{ product.you_saved }}
-        </div>
-
-      </div>
-
-      <div class="d-flex justify-content-between mt-3">
-        <button type="button"
-          class="btn btn-outline-danger btn-sm"
-          (click)="openWishlistPopup(product); $event.stopPropagation()">
-          <i class="fa fa-heart"></i>
-        </button>
-
-        <button type="button"
-          class="btn btn-primary btn-sm"
-          [disabled]="addingProductIds.has(product.id)"
-          (click)="addProductToCart(product); $event.stopPropagation()">
-          <i class="fa fa-shopping-cart"></i>
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
-  </div>
-
-  <div class="d-flex justify-content-center mt-4" *ngIf="filteredProducts$ | async as filteredProducts">
-
-    <button class="btn btn-outline-primary me-2"
-      (click)="prevPage()"
-      [disabled]="currentpage === 1">
-      Prev
-    </button>
-
-    <span class="px-3 fw-bold">Page {{ currentpage }}</span>
-
-    <button class="btn btn-outline-primary ms-2"
-      (click)="nextPage()"
-      [disabled]="currentpage * itemperpage >= filteredProducts.length">
-      Next
-    </button>
-
-  </div>
-
-</div>
-
-  <div class="cart-popup-overlay" *ngIf="showWishlistPopup">
-    <div class="cart-popup">
-      <h5 class="fw-bold">Add to Wishlist</h5>
-      <p class="mb-3">Add <strong>{{ selectedWishlistProduct?.name }}</strong> to your wishlist?</p>
-      <div class="d-flex justify-content-end gap-2">
-        <button class="btn btn-outline-secondary" (click)="closeWishlistPopup()">Cancel</button>
-        <button type="button" class="btn btn-outline-primary" (click)="confirmAddToWishlistAndView()">Continue to Shopping</button>
-
-      </div>
-    </div>
-  </div>
-
-  <div class="cart-popup-overlay" *ngIf="showCartConfirm">
-    <div class="cart-popup">
-      <h5 class="fw-bold">Add to Cart</h5>
-      <p class="mb-3">
-        Are you sure you want to add
-        <strong>{{ selectedCartProduct?.name }}</strong>
-        to your cart?
-      </p>
-      <div class="mb-3">
-        <label class="form-label">Quantity:</label>
-        <div class="d-flex align-items-center gap-2">
-          <button class="btn btn-outline-secondary btn-sm" (click)="decreaseCartQty()">-</button>
-          <span class="fw-bold" style="min-width: 30px; text-align: center;">{{ cartQuantity }}</span>
-          <button class="btn btn-outline-secondary btn-sm"
-            [disabled]="selectedCartProduct?.stock! <= cartQuantity"
-            (click)="increaseCartQty()">+</button>
+        <div class="list-group">
+          <button
+            *ngFor="let cat of categories"
+            class="list-group-item list-group-item-action"
+            [class.active]="selectedCategory === cat"
+            (click)="filterByCategory(cat)"
+          >
+            {{ cat }}
+          </button>
         </div>
       </div>
-      <div class="d-flex justify-content-end gap-2 flex-wrap">
-        <button class="btn btn-outline-secondary" (click)="closeCartConfirm()">
-          Cancel
+
+      <div class="card shadow-sm p-3 py-5">
+        <h6 class="fw-bold mb-3">Price Range</h6>
+        <label for="priceFilter" class="visually-hidden">Price range</label>
+
+        <input
+          id="priceFilter"
+          type="range"
+          class="form-range"
+          [min]="minPrice"
+          [max]="maxPrice"
+          [(ngModel)]="selectedPrice"
+          (input)="filterByPrice()"
+        />
+
+        <div class="d-flex justify-content-between">
+          <small>Rs. {{ minPrice }}</small>
+          <small class="fw-bold">Rs. {{ selectedPrice }}</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div *ngIf="loading$ | async" class="text-center mt-5">
+        <div class="spinner-border text-primary"></div>
+        <p class="mt-2 text-muted">Loading products...</p>
+      </div>
+
+      <div *ngIf="!(loading$ | async) && (filteredProducts$ | async)?.length === 0" class="text-center mt-5">
+        <img src="assets/images/no-data.png" width="180" class="mb-3" alt="No products found" />
+        <h4>No results found</h4>
+        <p class="text-muted">
+          Try searching with different keywords.
+        </p>
+        <button class="btn btn-primary" (click)="router.navigate(['/shop'])">
+          View All Products
         </button>
-        <button class="btn btn-outline-primary" (click)="confirmAddToCartAndView()">
-          Continue to Shopping
+      </div>
+
+      <div class="row py-3" *ngIf="!(loading$ | async) && (filteredProducts$ | async)?.length! > 0">
+        <div class="col-lg-4 col-md-12 mb-4" *ngFor="let product of paginatedProduct$ | async">
+          <div class="card h-100 shadow-sm border-0 product-card product-card-clickable" (click)="goToProduct(product.id)">
+            <div class="position-relative">
+              <img
+                [src]="resolveImage(product.product_img)"
+                alt="{{ product.name }}"
+                class="card-img-top p-3 product-image"
+              />
+
+              <span
+                *ngIf="product.discount_percentage > 0"
+                class="badge bg-danger position-absolute top-0 start-0 m-2"
+              >
+                {{ product.discount_percentage }}% OFF
+              </span>
+            </div>
+
+            <div class="card-body d-flex flex-column">
+              <span class="text-muted small mb-1">
+                {{ product.category }}
+              </span>
+
+              <h6 class="fw-bold mb-1">
+                {{ product.name }}
+              </h6>
+
+              <div class="mb-2">
+                <span class="text-warning">
+                  <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
+                  <i class="fa fa-star-half-alt" *ngIf="hasHalfStar(product.rating)"></i>
+                </span>
+                <small class="text-muted ms-1">{{ product.rating }}</small>
+              </div>
+
+              <p class="text-muted small flex-grow-1">
+                {{ product.description | slice:0:80 }}...
+              </p>
+
+              <div class="mt-auto">
+                <span class="fw-bold text-dark fs-5">
+                  Rs. {{ product.final_price }}
+                </span>
+
+                <span class="text-muted text-decoration-line-through ms-2">
+                  Rs. {{ product.price }}
+                </span>
+
+                <span class="text-success fw-bold ms-2">
+                  {{ product.discount_percentage }}% OFF
+                </span>
+
+                <div class="text-success small">
+                  You saved Rs. {{ product.you_saved }}
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between mt-3">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm"
+                  title="Add to wishlist"
+                  aria-label="Add to wishlist"
+                  (click)="openWishlistPopup(product); $event.stopPropagation()"
+                >
+                  <i class="fa fa-heart"></i>
+                </button>
+
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  [disabled]="addingProductIds.has(product.id)"
+                  title="Add to cart"
+                  aria-label="Add to cart"
+                  (click)="addProductToCart(product); $event.stopPropagation()"
+                >
+                  <i class="fa fa-shopping-cart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-4" *ngIf="filteredProducts$ | async as filteredProducts">
+        <button class="btn btn-outline-primary me-2" title="Previous page" aria-label="Previous page" (click)="prevPage()" [disabled]="currentPage === 1">
+          Prev
         </button>
-        <button class="btn btn-primary" (click)="confirmAddToCart()">
-          Confirm
+
+        <span class="px-3 fw-bold">Page {{ currentPage }}</span>
+
+        <button
+          class="btn btn-outline-primary ms-2"
+          title="Next page"
+          aria-label="Next page"
+          (click)="nextPage()"
+          [disabled]="currentPage * itemsPerPage >= filteredProducts.length"
+        >
+          Next
         </button>
+      </div>
+    </div>
+
+    <div class="cart-popup-overlay" *ngIf="showWishlistPopup">
+      <div class="cart-popup">
+        <h5 class="fw-bold">Add to Wishlist</h5>
+        <p class="mb-3">Add <strong>{{ selectedWishlistProduct?.name }}</strong> to your wishlist?</p>
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-outline-secondary" (click)="closeWishlistPopup()">Cancel</button>
+          <button type="button" class="btn btn-outline-primary" (click)="confirmAddToWishlistAndView()">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart-popup-overlay" *ngIf="showCartConfirm">
+      <div class="cart-popup">
+        <h5 class="fw-bold">Add to Cart</h5>
+        <p class="mb-3">
+          Are you sure you want to add
+          <strong>{{ selectedCartProduct?.name }}</strong>
+          to your cart?
+        </p>
+        <div class="mb-3">
+          <label class="form-label">Quantity:</label>
+          <div class="d-flex align-items-center gap-2">
+            <button class="btn btn-outline-secondary btn-sm" title="Decrease quantity" aria-label="Decrease quantity" (click)="decreaseCartQty()">-</button>
+            <span class="fw-bold cart-quantity-value">{{ cartQuantity }}</span>
+            <button
+              class="btn btn-outline-secondary btn-sm"
+              title="Increase quantity"
+              aria-label="Increase quantity"
+              [disabled]="selectedCartProduct?.stock! <= cartQuantity"
+              (click)="increaseCartQty()"
+            >+</button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end gap-2 flex-wrap">
+          <button class="btn btn-outline-secondary" (click)="closeCartConfirm()">
+            Cancel
+          </button>
+          <button class="btn btn-outline-primary" (click)="confirmAddToCartAndView()">
+            Continue Shopping
+          </button>
+          <button class="btn btn-primary" (click)="confirmAddToCart()">
+            Confirm
+          </button>
+        </div>
       </div>
     </div>
   </div>

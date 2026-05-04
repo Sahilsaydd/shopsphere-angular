@@ -53,6 +53,10 @@
   cursor: pointer;
 }
 
+.product-card-clickable {
+  cursor: pointer;
+}
+
 .product-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -120,4 +124,9 @@
   .cart-popup {
     width: 90% !important;
   }
+}
+
+.cart-quantity-value {
+  min-width: 30px;
+  text-align: center;
 }

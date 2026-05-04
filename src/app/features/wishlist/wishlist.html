@@ -1,43 +1,30 @@
 <div class="container my-5">
-
   <h3 class="fw-bold mb-4">Your Wishlist</h3>
 
-  <!-- EMPTY -->
   <div *ngIf="wishlistItems.length === 0" class="text-center text-muted">
-    <p>No items in wishlist</p>
+    <p>No items in your wishlist.</p>
   </div>
 
-  <!-- ITEMS -->
-  <div *ngFor="let item of wishlistItems; let i = index"
-       class="card border-0 shadow-sm rounded-4 p-3 mb-3">
-
+  <div *ngFor="let item of wishlistItems; let i = index" class="card border-0 shadow-sm rounded-4 p-3 mb-3">
     <div class="d-flex justify-content-between align-items-center">
-
       <div class="d-flex align-items-center gap-3">
-        <img [src]="item.image" width="60" alt="" class="rounded">
+        <img [src]="resolveImage(item.image || item.product_img)" width="60" alt="" class="rounded">
 
         <div>
           <h6 class="fw-semibold mb-1">{{ item.name }}</h6>
-          <small class="text-muted">₹ {{ item.price }}</small>
+          <small class="text-muted">Rs. {{ item.price }}</small>
         </div>
       </div>
 
-      <i class="fa fa-trash text-danger"
-         style="cursor: pointer;"
-         (click)="openRemoveConfirm(i)">
-      </i>
-
+      <i class="fa fa-trash text-danger" style="cursor: pointer;" (click)="openRemoveConfirm(i)"></i>
     </div>
-
   </div>
-
 </div>
 
-<!-- ✅ MODAL -->
+<!-- Modal -->
 <div class="modal fade show d-block" *ngIf="showModal">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-4 shadow">
-
       <div class="modal-header">
         <h5 class="modal-title">Remove Item</h5>
         <button type="button" class="btn-close" (click)="closeModal()"></button>
@@ -51,10 +38,8 @@
         <button class="btn btn-secondary" (click)="closeModal()">Cancel</button>
         <button class="btn btn-danger" (click)="confirmRemove()">Remove</button>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- BACKDROP -->
 <div class="modal-backdrop fade show" *ngIf="showModal"></div>

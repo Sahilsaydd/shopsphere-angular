@@ -15,6 +15,7 @@ import { map, tap, switchMap } from 'rxjs/operators';
   styleUrls: ['./home.css']
 })
 export class Home implements OnInit {
+  imageBaseUrl = 'http://127.0.0.1:8000';
 
   allTrendingProducts$!: Observable<Product[]>;
   visibleProducts$!: Observable<Product[]>;
@@ -73,5 +74,15 @@ export class Home implements OnInit {
 
   hasHalfStar(rating: number) {
     return rating % 1 >= 0.5;
+  }
+
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
   }
 }

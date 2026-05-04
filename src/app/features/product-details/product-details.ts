@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./product-details.css'],
 })
 export class ProductDetails implements OnInit {
+  imageBaseUrl = 'http://127.0.0.1:8000';
 
   private readonly destroyRef = inject(DestroyRef);
 
@@ -75,11 +76,19 @@ export class ProductDetails implements OnInit {
   }
 
   private getPrimaryImage(product: Product): string {
-    return product.product_images?.[0] || product.product_img || '';
+    return this.resolveImage(product.product_images?.[0] || product.product_img || '');
   }
 
   changeImage(img: string) {
     this.selectedImage = img;
+  }
+
+  getProductImages(product: Product): string[] {
+    const images = product.product_images?.length
+      ? product.product_images
+      : [product.product_img];
+
+    return images.map((img) => this.resolveImage(img));
   }
 
   increaseQty() {
@@ -144,7 +153,7 @@ export class ProductDetails implements OnInit {
     if (!this.product_details) return;
 
     if (!this.userData.name || !this.userData.phone || !this.userData.address) {
-      alert("Please fill all fields");
+      alert('Please fill in all fields.');
       return;
     }
 
@@ -157,5 +166,15 @@ export class ProductDetails implements OnInit {
         user: this.userData
       }
     });
+  }
+
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
   }
 }

@@ -18,7 +18,7 @@
 
         <div class="mt-4 d-flex gap-3">
           <button class="btn btn-primary px-4 py-2">
-            <a routerLink="/shop">Shop Collection →</a>
+            <a routerLink="/shop">Shop Collection</a>
           </button>
 
           <button class="btn btn-outline-light px-4 py-2">View Lookbook</button>
@@ -28,13 +28,12 @@
   </div>
 </section>
 
-<!-- ✅ Categories -->
+<!-- Categories -->
 <app-categories></app-categories>
 
-<!-- ✅ Sustainable Section -->
+<!-- Sustainable Section -->
 <div class="container my-5 rounded-2 anther_section py-3">
   <div class="row align-items-center g-5">
-
     <div class="col-lg-6">
       <h1 class="fw-bold mb-4">
         The Sustainable <br> Standard.
@@ -66,14 +65,11 @@
         class="img-fluid rounded-4 shadow"
       >
     </div>
-
   </div>
 </div>
 
 <!-- Trending Now -->
 <div class="container my-5">
-
-  <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-bold">Trending Now</h4>
 
@@ -100,17 +96,12 @@
     </div>
   </div>
 
-  <!-- Cards -->
   <div class="scroll-container">
-
     <div class="product-card" *ngFor="let product of visibleProducts$ | async">
-
       <a [routerLink]="['/shop']" [queryParams]="{ product: product.id }">
-
         <div class="card-img-wrapper position-relative">
-          <img [src]="product.product_img" alt="" class="img-fluid" />
+          <img [src]="resolveImage(product.product_img)" alt="" class="img-fluid" />
 
-          <!-- Badge -->
           <span *ngIf="product.rating >= 4.7" class="badge bg-warning text-dark">
             HOT
           </span>
@@ -124,7 +115,6 @@
           {{ product.name }}
         </h6>
 
-        <!-- RATING -->
         <div class="d-flex align-items-center mt-1">
           <span class="text-warning me-2">
             <i class="fa fa-star" *ngFor="let s of getFullStars(product.rating)"></i>
@@ -134,13 +124,9 @@
         </div>
 
         <p class="text-primary fw-semibold">
-          ₹ {{ product.price }}
+          Rs. {{ product.price }}
         </p>
-
       </a>
-
     </div>
-
   </div>
-
 </div>

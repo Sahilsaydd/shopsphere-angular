@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Auth } from '../../core/services/auth';
 import { Cart } from '../../core/services/cart';
 import { OrderService } from '../../core/services/order';
-import { Auth } from '../../core/services/auth';
-import { email } from '@angular/forms/signals';
-import { ChangeDetectorRef } from '@angular/core';
+
 @Component({
   selector: 'app-user',
   standalone: true,
@@ -14,33 +13,31 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./user.css'],
 })
 export class User implements OnInit {
-
   activeTab: 'overview' | 'cart' | 'orders' = 'overview';
 
   userDetails: any = null;
-
   userInitials: string = '';
   cartItems: any[] = [];
   orders: any[] = [];
 
   loadingCart = true;
   loadingOrders = true;
+  imageBaseUrl = 'http://127.0.0.1:8000';
 
   constructor(
     private cartService: Cart,
     private orderService: OrderService,
     private authService: Auth,
-
     private router: Router,
     private route: ActivatedRoute,
-    private cdr:ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-
     this.fetchCart();
     this.fetchOrders();
-    this.fetchUserDetails()
+    this.fetchUserDetails();
+
     this.route.queryParams.subscribe(params => {
       const tab = params['tab'];
       if (tab === 'orders' || tab === 'cart' || tab === 'overview') {
@@ -49,8 +46,6 @@ export class User implements OnInit {
     });
   }
 
-
-
   fetchCart() {
     this.loadingCart = true;
     this.cartService.getCart().subscribe({
@@ -58,15 +53,17 @@ export class User implements OnInit {
         const raw = res?.items ?? [];
         this.cartItems = raw.map((item: any) => ({
           productId: item.product?.id ?? null,
-          name:      item.product?.name ?? 'Unknown Product',
-          category:  item.product?.category ?? '',
-          image:     item.product?.image ?? '',
-          price:     Number(item.product?.price ?? 0),
-          quantity:  Number(item.quantity ?? 1)
+          name: item.product?.name ?? 'Unknown Product',
+          category: item.product?.category ?? '',
+          image: item.product?.image ?? item.product?.product_img ?? '',
+          price: Number(item.product?.price ?? 0),
+          quantity: Number(item.quantity ?? 1)
         }));
         this.loadingCart = false;
       },
-      error: () => { this.loadingCart = false; }
+      error: () => {
+        this.loadingCart = false;
+      }
     });
   }
 
@@ -76,46 +73,42 @@ export class User implements OnInit {
       next: (data) => {
         this.orders = Array.isArray(data) ? data : data?.orders ?? [];
         this.loadingOrders = false;
-          this.cdr.detectChanges();
+        this.cdr.detectChanges();
       },
-
-      error: () => { this.loadingOrders = false; }
+      error: () => {
+        this.loadingOrders = false;
+      }
     });
   }
 
-fetchUserDetails() {
-  this.authService.getUserDetails().subscribe({
-    next: (res) => {
-      console.log("User API:", res);
+  fetchUserDetails() {
+    this.authService.getUserDetails().subscribe({
+      next: (res) => {
+        this.userDetails = res;
 
-      this.userDetails = res
+        if (res.name && res.name.trim().length > 0) {
+          const parts = res.name.trim().split(' ');
 
-      if (res.name && res.name.trim().length > 0) {
-        const parts = res.name.trim().split(' ');
-
-        if (parts.length >= 2) {
+          if (parts.length >= 2) {
+            this.userInitials = (parts[0][0] + parts[1][0]).toUpperCase();
+          } else {
+            this.userInitials = parts[0][0].toUpperCase();
+          }
+        } else if (this.userDetails.email) {
+          const name = this.userDetails.email.split('@')[0];
           this.userInitials =
-            (parts[0][0] + parts[1][0]).toUpperCase();
-        } else {
-          this.userInitials = parts[0][0].toUpperCase();
+            name.length >= 2
+              ? (name[0] + name[1]).toUpperCase()
+              : name[0]?.toUpperCase() ?? '?';
         }
 
-      } else if (this.userDetails.email) {
-        const name = this.userDetails.email.split('@')[0];
-        this.userInitials =
-          name.length >= 2
-            ? (name[0] + name[1]).toUpperCase()
-            : name[0]?.toUpperCase() ?? '?';
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error('User API error:', err);
       }
-      this.cdr.detectChanges();
-    },
-
-    error: (err) => {
-      console.error("User API error:", err);
-    }
-  });
-}
-
+    });
+  }
 
   setTab(tab: 'overview' | 'cart' | 'orders') {
     this.activeTab = tab;
@@ -142,5 +135,15 @@ fetchUserDetails() {
       next: () => this.router.navigate(['/login']),
       error: () => this.router.navigate(['/login'])
     });
+  }
+
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
   }
 }

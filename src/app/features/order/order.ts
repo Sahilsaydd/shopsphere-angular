@@ -9,7 +9,6 @@ import { OrderService } from '../../core/services/order';
   standalone: true
 })
 export class Order implements OnInit {
-
   productId!: number;
   quantity!: number;
 
@@ -36,10 +35,10 @@ export class Order implements OnInit {
   placeOrder() {
     this.orderService.checkout(this.productId, this.userData).subscribe({
       next: () => {
-        alert('✅ Order placed successfully!');
+        alert('Order placed successfully.');
       },
       error: () => {
-        alert('❌ Order failed');
+        alert('Order failed.');
       }
     });
   }

@@ -8,7 +8,7 @@ export const ADMIN_ROUTES: Routes = [
       import('./layout/admin-layout/admin-layout').then(m => m.AdminLayout),
 
     canActivate: [adminGuard], // 🔥 apply guard here
-    
+
 
     children: [
       {
@@ -32,11 +32,13 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent:()=>
           import('./components/product_component/add-product/add-product').then(m=>m.AddProduct)
       }
-      ,{
-        path:'product/update',
-        loadComponent:()=>
-          import('./components/product_component/update-product/update-product').then(m=>m.UpdateProduct)
-      }
+        ,{
+          path: 'product_component/update-product/:id',
+          loadComponent: () =>
+            import('./components/product_component/update-product/update-product')
+              .then(m => m.UpdateProduct)
+        }
+
       ,{
         path:'product/delete',
         loadComponent:()=>

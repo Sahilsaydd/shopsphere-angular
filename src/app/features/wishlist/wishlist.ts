@@ -10,6 +10,7 @@ import { WishlistService } from '../../core/services/wishlist';
   styleUrls: ['./wishlist.css'],
 })
 export class Wishlist implements OnInit {
+  imageBaseUrl = 'http://127.0.0.1:8000';
 
   wishlistItems: any[] = [];
 
@@ -42,5 +43,15 @@ export class Wishlist implements OnInit {
   closeModal() {
     this.showModal = false;
     this.selectedIndex = null;
+  }
+
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
   }
 }

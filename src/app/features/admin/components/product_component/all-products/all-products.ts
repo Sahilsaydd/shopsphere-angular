@@ -12,6 +12,7 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrl: './all-products.css',
 })
 export class AllProducts {
+  imageBaseUrl = 'http://127.0.0.1:8000';
   products: Product[] = [];
 searchTerm: string = '';
 currentPage: number = 1;
@@ -38,7 +39,7 @@ loadProducts() {
 
          this.products = res.products;
         this.totalPages = res.total_pages;
-        this.currentPage = res.current_page; 
+        this.currentPage = res.current_page;
 
         console.log('Total Pages:', this.totalPages);
         this.cdr.detectChanges();
@@ -97,8 +98,9 @@ getProducts() {
   });
 }
 
-editProduct(id: number) {
-  this.router.navigate(['/admin/products/update', id]);
+editProduct(id:number){
+  console.log(id)
+  this.router.navigate(['admin/product_component/update-product',id])
 }
 
 deleteProduct(id: number) {
@@ -108,10 +110,8 @@ deleteProduct(id: number) {
       next: () => {
 
 
-          // ✅ Instant UI update
         this.products = this.products.filter(p => p.id !== id);
 
-        // 🔄 Optional background sync (no flicker)
         setTimeout(() => this.getProducts(), 500);
 
       },
@@ -121,5 +121,15 @@ deleteProduct(id: number) {
     });
 
   }
+}
+
+resolveImage(path: string | null | undefined): string {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+    return path;
+  }
+
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${this.imageBaseUrl}${normalizedPath}`;
 }
 }

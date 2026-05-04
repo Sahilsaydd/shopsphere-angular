@@ -26,8 +26,8 @@ export class Shop implements OnInit {
   searchKeyword: string = '';
   loading$ = new BehaviorSubject<boolean>(false);
 
-  currentpage = 1;
-  itemperpage = 6;
+  currentPage = 1;
+  itemsPerPage = 6;
 
   categories: string[] = [];
   selectedCategory: string = 'All';
@@ -45,7 +45,7 @@ export class Shop implements OnInit {
   // WISHLIST
   showWishlistPopup = false;
   selectedWishlistProduct: Product | null = null;
-
+  imageBaseUrl = 'http://127.0.0.1:8000';
   constructor(
     private productService: Products,
     private cartService: Cart,
@@ -106,7 +106,7 @@ export class Shop implements OnInit {
     this.filteredProducts$.next(filtered);
 
     // ✅ FIX: reset page
-    this.currentpage = 1;
+    this.currentPage = 1;
 
     this.updatePagination();
   }
@@ -114,19 +114,19 @@ export class Shop implements OnInit {
   updatePagination() {
     this.paginatedProduct$ = this.filteredProducts$.pipe(
       map(products => {
-        const start = (this.currentpage - 1) * this.itemperpage;
-        return products.slice(start, start + this.itemperpage);
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        return products.slice(start, start + this.itemsPerPage);
       })
     );
   }
 
   nextPage() {
-    this.currentpage++;
+    this.currentPage++;
     this.updatePagination();
   }
 
   prevPage() {
-    this.currentpage--;
+    this.currentPage--;
     this.updatePagination();
   }
 
@@ -137,6 +137,16 @@ export class Shop implements OnInit {
 
   hasHalfStar(rating: number) {
     return rating % 1 >= 0.5;
+  }
+
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
   }
 
   // ================= CART =================

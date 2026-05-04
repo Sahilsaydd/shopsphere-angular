@@ -24,6 +24,7 @@ interface UiCartItem {
   styleUrls: ['./cart.css'],
 })
 export class CartComponent implements OnInit {
+  imageBaseUrl = 'http://127.0.0.1:8000';
 
   cartItems: UiCartItem[] = [];
 
@@ -49,7 +50,7 @@ export class CartComponent implements OnInit {
           name: item.product.name,
           category: item.product.category,
           description: item.product.description,
-          image: item.product.image,
+          image: item.product.image || item.product.product_img,
           price: Number(item.product.price),
           quantity: Number(item.quantity)
         }));
@@ -98,5 +99,15 @@ export class CartComponent implements OnInit {
 
     goToProduct(id: number) {
     this.router.navigate(['/product', id]);
+  }
+
+  resolveImage(path: string | null | undefined): string {
+    if (!path) return '';
+    if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('assets/')) {
+      return path;
+    }
+
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${this.imageBaseUrl}${normalizedPath}`;
   }
 }
