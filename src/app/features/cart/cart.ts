@@ -81,8 +81,6 @@ export class CartComponent implements OnInit {
       this.removeItem(item);
       return;
     }
-
-    // ✅ FIXED LOGIC
     this.cartService.addToCart(item.productId!, -1).subscribe({
       next: () => this.loadCart(),
       error: (err) => console.error(err)

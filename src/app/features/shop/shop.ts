@@ -36,13 +36,11 @@ export class Shop implements OnInit {
   maxPrice = 1000;
   selectedPrice = 1000;
 
-  // CART
   addingProductIds = new Set<number>();
   showCartConfirm = false;
   selectedCartProduct: Product | null = null;
   cartQuantity: number = 1;
 
-  // WISHLIST
   showWishlistPopup = false;
   selectedWishlistProduct: Product | null = null;
   imageBaseUrl = 'http://127.0.0.1:8000';
@@ -76,7 +74,6 @@ export class Shop implements OnInit {
     });
   }
 
-  // FILTERS
   filterByCategory(category: string) {
     this.selectedCategory = category;
 
@@ -105,7 +102,6 @@ export class Shop implements OnInit {
 
     this.filteredProducts$.next(filtered);
 
-    // ✅ FIX: reset page
     this.currentPage = 1;
 
     this.updatePagination();
@@ -130,7 +126,6 @@ export class Shop implements OnInit {
     this.updatePagination();
   }
 
-  // UI HELPERS
   getFullStars(rating: number) {
     return Array.from({ length: Math.floor(rating) });
   }
@@ -149,7 +144,6 @@ export class Shop implements OnInit {
     return `${this.imageBaseUrl}${normalizedPath}`;
   }
 
-  // ================= CART =================
   addProductToCart(product: Product) {
     this.selectedCartProduct = product;
     this.cartQuantity = 1;
@@ -223,7 +217,6 @@ export class Shop implements OnInit {
     }
   }
 
-  // ================= WISHLIST =================
   openWishlistPopup(product: Product) {
     this.selectedWishlistProduct = product;
     this.showWishlistPopup = true;
@@ -244,7 +237,6 @@ export class Shop implements OnInit {
     this.router.navigate(['/wishlist']);
   }
 
-  // ================= DATA LOAD =================
   afterDataLoad() {
     this.loading$.next(false);
 
@@ -260,7 +252,6 @@ export class Shop implements OnInit {
     this.applyFilters();
   }
 
-  // NAVIGATION
   goToProduct(id: number) {
     this.router.navigate(['/product', id]);
   }

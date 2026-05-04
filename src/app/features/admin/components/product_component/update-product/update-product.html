@@ -5,7 +5,6 @@
       <div class="card shadow-lg border-0 rounded-4">
         <div class="card-body p-4">
 
-          <!-- Header -->
           <h4 class="fw-bold text-center mb-4">
             <i class="fas fa-edit text-primary me-2"></i>
             Update Product
@@ -13,7 +12,6 @@
 
           <form (ngSubmit)="update()" #updateForm="ngForm">
 
-            <!-- Name -->
             <div class="mb-3">
               <label class="form-label fw-semibold">
                 <i class="fas fa-tag text-primary me-1"></i> Product Name
@@ -24,7 +22,6 @@
                      required>
             </div>
 
-            <!-- Description -->
             <div class="mb-3">
               <label class="form-label fw-semibold">
                 <i class="fas fa-align-left text-primary me-1"></i> Description
@@ -36,7 +33,6 @@
                         required></textarea>
             </div>
 
-            <!-- Price + Category -->
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-semibold">
@@ -59,7 +55,6 @@
               </div>
             </div>
 
-            <!-- Stock + Brand -->
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-semibold">
@@ -81,7 +76,6 @@
               </div>
             </div>
 
-            <!-- Rating + Discount -->
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label class="form-label fw-semibold">
@@ -103,7 +97,6 @@
               </div>
             </div>
 
-            <!-- Existing Image Preview -->
             <div class="mb-3">
               <label class="form-label fw-semibold">
                 <i class="fas fa-image text-primary me-1"></i> Current Image
@@ -116,7 +109,6 @@
               </div>
             </div>
 
-            <!-- Upload New Main Image -->
             <div class="mb-3">
               <label class="form-label fw-semibold">
                 <i class="fas fa-upload text-primary me-1"></i> Replace Main Image
@@ -125,7 +117,6 @@
                      (change)="onFileSelect($event)">
             </div>
 
-            <!-- Multiple Images -->
             <div class="mb-3">
               <label class="form-label fw-semibold">
                 <i class="fas fa-images text-primary me-1"></i> Add More Images
@@ -135,7 +126,6 @@
                      (change)="onMultipleSelect($event)">
             </div>
 
-            <!-- Buttons -->
             <div class="d-flex gap-3 mt-4">
               <button type="submit"
                       class="btn btn-success w-100"

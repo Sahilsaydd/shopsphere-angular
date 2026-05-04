@@ -1,6 +1,5 @@
 <div class="sidebar" [class.collapsed]="isCollapsed">
 
-  <!-- Logo -->
   <div class="logo d-flex align-items-center justify-content-between px-3 py-3">
     <span *ngIf="!isCollapsed" class="fw-bold">Admin Panel</span>
     <button class="btn btn-sm btn-toggle" (click)="toggleSidebar()">
@@ -8,10 +7,8 @@
     </button>
   </div>
 
-  <!-- Menu -->
   <ul class="nav flex-column mt-3">
 
-    <!-- Dashboard -->
     <li class="nav-item">
       <a routerLink="/admin"
          routerLinkActive="active"
@@ -22,7 +19,6 @@
       </a>
     </li>
 
-    <!-- 🔥 Products (Bootstrap Collapse) -->
     <li class="nav-item">
 
       <a class="nav-link d-flex justify-content-between align-items-center"
@@ -40,7 +36,6 @@
         <i *ngIf="!isCollapsed" class="fas fa-chevron-down small"></i>
       </a>
 
-      <!-- Submenu -->
       <div class="collapse submenu" id="productsMenu">
         <ul class="list-unstyled">
 
@@ -84,7 +79,6 @@
 
     </li>
 
-    <!-- Orders -->
     <li class="nav-item">
       <a routerLink="/admin/orders"
          routerLinkActive="active"
@@ -94,7 +88,6 @@
       </a>
     </li>
 
-    <!-- Users -->
     <li class="nav-item">
       <a routerLink="/admin/users"
          routerLinkActive="active"

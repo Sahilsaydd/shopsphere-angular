@@ -34,11 +34,9 @@ export class CategoriesComponent implements OnInit {
 
     this.loading = true;
 
-    // ✅ FIRST get products
     this.productsService.getProducts().subscribe({
       next: (products) => {
 
-        // ✅ THEN get category meta
         this.categoryService.getCategories().subscribe({
           next: (categoryMeta) => {
 
@@ -63,13 +61,12 @@ export class CategoriesComponent implements OnInit {
               };
             });
 
-            this.loading = false; // ✅ SUCCESS
+            this.loading = false; 
           },
 
           error: (err) => {
             console.error('Category API failed:', err);
 
-            // 🔥 FALLBACK → still show categories from products
             const distinctNames = Array.from(
               new Set(products.map(p => p.category).filter(Boolean))
             );

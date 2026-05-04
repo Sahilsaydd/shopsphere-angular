@@ -1,6 +1,5 @@
 <div class="success-wrapper">
 
-  <!-- Confetti layer -->
   <div class="confetti-layer" aria-hidden="true">
     <span *ngFor="let c of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
           class="confetti-piece"
@@ -10,15 +9,12 @@
     </span>
   </div>
 
-  <!-- Main card -->
   <div class="success-card">
 
-    <!-- Top accent stripe -->
     <div class="accent-stripe"></div>
 
     <div class="success-body">
 
-      <!-- Animated checkmark -->
       <div class="check-wrap">
         <svg class="checkmark" viewBox="0 0 52 52">
           <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
@@ -26,13 +22,11 @@
         </svg>
       </div>
 
-      <!-- Heading -->
       <h1 class="success-title">Order Placed!</h1>
       <p class="success-subtitle">
         Your order is confirmed and is being processed. Thank you for shopping with us!
       </p>
 
-      <!-- Order summary box -->
       <div *ngIf="productName" class="order-summary">
 
         <div class="summary-row">
@@ -58,7 +52,6 @@
 
       </div>
 
-      <!-- Action buttons -->
       <div class="action-btns">
         <button class="btn-primary-blue" (click)="goToOrders()" id="btn-view-orders">
           <i class="fa-solid fa-bag-shopping me-2"></i>My Orders
@@ -68,7 +61,6 @@
         </button>
       </div>
 
-      <!-- Trust badges -->
       <div class="trust-badges">
         <span class="badge-item">
           <i class="fa-solid fa-shield-halved"></i>

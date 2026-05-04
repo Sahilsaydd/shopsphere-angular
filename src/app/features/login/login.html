@@ -4,24 +4,20 @@
       <img src="/assets/images/ecommerce-logo.png.jpg" alt="E-Commerce" class="site-logo" />
     </div>
 
-    <!-- LEFT PANEL -->
     <div class="login-left">
       <h2>Welcome Back 👋</h2>
       <p>Login to access your account, orders, and wishlist.</p>
     </div>
 
-    <!-- RIGHT PANEL -->
     <div class="login-right">
 
       <h4 class="mb-4 fw-bold">Login</h4>
 
       <form #form="ngForm" (ngSubmit)="onLogin()" autocomplete="off">
 
-        <!-- Hidden dummy fields to capture browser autofill -->
         <input type="text" autocomplete="username" class="hidden-autofill" aria-hidden="true">
         <input type="password" autocomplete="current-password" class="hidden-autofill" aria-hidden="true">
 
-        <!-- EMAIL -->
         <div class="input-group mb-1">
           <span class="input-group-text">
             <i class="fa fa-envelope"></i>
@@ -44,7 +40,6 @@
           <span *ngIf="emailRef.errors?.['email']">Invalid email format</span>
         </small>
 
-        <!-- PASSWORD -->
         <div class="input-group mb-1 mt-3">
           <span class="input-group-text">
             <i class="fa fa-lock"></i>
@@ -67,7 +62,6 @@
           <span *ngIf="passwordRef.errors?.['minlength']">Minimum 8 characters</span>
         </small>
 
-        <!-- BUTTON -->
         <button
           type="submit"
           [disabled]="form.invalid"
@@ -76,10 +70,8 @@
           Login
         </button>
 
-        <!-- ERROR -->
         <p class="text-danger text-center mt-2">{{ error }}</p>
 
-        <!-- REGISTER LINK -->
         <p class="mt-3 text-center">
           Don’t have an account?
           <a routerLink="/register" class="fw-bold text-decoration-none">

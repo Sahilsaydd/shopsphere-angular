@@ -1,6 +1,5 @@
 <div class="container my-5">
 
-  <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h3 class="fw-bold">Curated Realms</h3>
@@ -12,13 +11,11 @@
     </a>
   </div>
 
-  <!-- Categories -->
   <div *ngIf="!loading; else loadingTpl">
     <div class="row g-4">
 
       <ng-container *ngFor="let category of categories; index as i">
 
-        <!-- LARGE -->
         <div *ngIf="i === 0" class="col-lg-6">
           <div
             class="category-card large"
@@ -32,7 +29,6 @@
           </div>
         </div>
 
-        <!-- MEDIUM -->
         <div *ngIf="i === 1" class="col-6">
           <div
             class="category-card medium"
@@ -45,7 +41,6 @@
           </div>
         </div>
 
-        <!-- SMALL -->
         <div *ngIf="i === 2 || i === 3" class="col-6">
           <div
             class="category-card small"
@@ -63,7 +58,6 @@
     </div>
   </div>
 
-  <!-- Loading -->
 <ng-template #loadingTpl>
   <div class="text-center py-5">
     <div class="spinner-border text-primary"></div>

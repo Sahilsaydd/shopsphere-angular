@@ -7,7 +7,7 @@ export const ADMIN_ROUTES: Routes = [
     loadComponent: () =>
       import('./layout/admin-layout/admin-layout').then(m => m.AdminLayout),
 
-    canActivate: [adminGuard], // 🔥 apply guard here
+    canActivate: [adminGuard], 
 
 
     children: [

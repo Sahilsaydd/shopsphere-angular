@@ -14,7 +14,6 @@ export class OrderSuccessComponent implements OnInit {
   productName: string = '';
   totalPrice: number = 0;
   quantity: number = 1;
-  // Confetti colors matching the project's blue palette
   colors = ['#2f6fed', '#5b9bff', '#1e5bd8', '#60a5fa', '#3b82f6', '#f59e0b', '#34d399'];
 
   constructor(private router: Router) { }
@@ -26,7 +25,6 @@ export class OrderSuccessComponent implements OnInit {
     this.totalPrice  = state?.['totalPrice']  ?? 0;
     this.quantity    = state?.['quantity']    ?? 1;
 
-    // Guard: if no orderId in state, user typed the URL directly → redirect to shop
     if (!this.orderId) {
       this.router.navigate(['/shop']);
     }
